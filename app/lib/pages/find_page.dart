@@ -16,20 +16,22 @@ class _FindPageState extends State<FindPage> {
           name: "yourmomshouse",
           address: "111 El Camino",
           date: DateTime(1),
-          url: "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq"
-          imageurl: 
+          url: "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+          imageurl: ""
         ),
     Event(
           name: "yourmomshouse",
           address: "111 El Camino",
           date: DateTime(1),
-          url: "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq"
+          url: "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+          imageurl: ""
         ),
     Event(
           name: "yourmomshouse",
           address: "111 El Camino",
           date: DateTime(1),
-          url:"https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq"
+          url:"https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+          imageurl: ""
         ),
   ];
 
