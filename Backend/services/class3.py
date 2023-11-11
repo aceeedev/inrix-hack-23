@@ -1,12 +1,12 @@
 import requests
-import json
 
-def run_get_tickets(): 
-    url = 'https://app.ticketmaster.com/discovery/v2/events'
-    payload = {'apikey': "5eNZUfknq3JGAOjAJT2zyaJ6x8i5wqcG", 'city': "San Francisco", 'classificationName': "music"}
+class TicketMasterServices:
 
-    response = requests.get(url=url, params=payload)
-    response = response.json()
-    print(response['_embedded'])
+    def run_get_tickets(): 
+        url = 'https://app.ticketmaster.com/discovery/v2/events'
+        payload = {'apikey': "5eNZUfknq3JGAOjAJT2zyaJ6x8i5wqcG", 'city': "San Francisco", 'classificationName': "music"}
 
-print(run_get_tickets())
+        response = requests.get(url=url, params=payload)
+        response = response.json()
+        
+        return response['_embedded']
