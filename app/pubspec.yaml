@@ -39,6 +39,7 @@ dependencies:
   hive_flutter: ^1.1.0
   intl: ^0.18.1
   google_maps_flutter: ^2.0.0
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
