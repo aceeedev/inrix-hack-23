@@ -1,15 +1,24 @@
-class Event {
-  final String name;
-  final String address;
-  final DateTime date;
-  final String url;
-  final String imageurl;
+import 'package:hive/hive.dart';
 
-  Event({
-    required this.name,
-    required this.address,
-    required this.date,
-    required this.url,
-    required this.imageurl
-  });
+part 'event.g.dart';
+
+@HiveType(typeId: 1)
+class Event extends HiveObject {
+  @HiveField(0)
+  final String name;
+  @HiveField(1)
+  final String address;
+  @HiveField(2)
+  final DateTime date;
+  @HiveField(3)
+  final String url;
+  @HiveField(4)
+  final String imageUrl;
+
+  Event(
+      {required this.name,
+      required this.address,
+      required this.date,
+      required this.url,
+      required this.imageUrl});
 }

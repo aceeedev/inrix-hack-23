@@ -18,7 +18,7 @@ Future<List<Event>> getEvents(double lat, double long) async {
             address: 'address',
             date: DateTime.now(),
             url: 'url',
-            imageurl: 'imageUrl'))
+            imageUrl: 'imageUrl'))
         .toList();
 
     return events;

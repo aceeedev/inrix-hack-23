@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/models/event.dart';
-import 'package:app/widgets/ticket_card_widget.dart';
+import 'package:app/widgets/tickets_list_widget.dart';
 import 'package:app/widgets/bottom_navbar_widget.dart';
 
 class FindPage extends StatefulWidget {
@@ -19,21 +19,21 @@ class _FindPageState extends State<FindPage> {
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageurl: ""),
+        imageUrl: ""),
     Event(
         name: "yourmomshouse",
         address: "111 El Camino",
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageurl: ""),
+        imageUrl: ""),
     Event(
         name: "yourmomshouse",
         address: "111 El Camino",
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageurl: ""),
+        imageUrl: ""),
   ];
 
   @override
@@ -43,14 +43,7 @@ class _FindPageState extends State<FindPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Title'),
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(8),
-        itemCount: events.length,
-        itemBuilder: (BuildContext context, int index) {
-          return TicketCard(event: events[index]);
-        },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
-      ),
+      body: TicketsList(events: events),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         tooltip: 'Increment',

@@ -1,8 +1,7 @@
+import 'package:app/pages/find_page.dart';
 import 'package:flutter/material.dart';
-import 'package:app/pages/home_page.dart';
 import 'package:app/pages/map_page.dart';
 import 'package:app/widgets/gradient_button_widget.dart';
-import 'package:flutter/material.dart';
 
 class BeginPage extends StatelessWidget {
   const BeginPage({super.key});
@@ -22,7 +21,7 @@ class BeginPage extends StatelessWidget {
           GradientButton(
               onPressed: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const MapPage(title: "map"),
+                      builder: (context) => const FindPage(),
                     ),
                   ),
               child: Text('Begin'))
