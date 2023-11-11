@@ -12,9 +12,9 @@ class TicketMasterServices:
 
         for i in response['_embedded']['events']:
             eventname = i['name']
-            # lat = i[]
-            # long = i[]
+            lat = i['_embedded']['venues'][0]['location']['latitude']
+            long = i['_embedded']['venues'][0]['location']['longitude']
             # print(eventname)
-            eventList.append({'name': eventname, })
+            eventList.append({'name': eventname, 'lat': lat, 'long': long})
         pprint(eventList)
 TicketMasterServices.run_get_tickets()
