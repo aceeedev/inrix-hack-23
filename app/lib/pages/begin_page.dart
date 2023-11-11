@@ -1,6 +1,5 @@
 import 'package:app/pages/find_page.dart';
 import 'package:flutter/material.dart';
-import 'package:app/pages/map_page.dart';
 import 'package:app/widgets/gradient_button_widget.dart';
 
 class BeginPage extends StatelessWidget {
