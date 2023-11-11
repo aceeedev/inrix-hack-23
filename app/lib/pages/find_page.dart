@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/models/event.dart';
 import 'package:app/widgets/ticket_card_widget.dart';
+import 'package:app/widgets/bottom_navbar_widget.dart';
 
 class FindPage extends StatefulWidget {
   const FindPage({super.key});
@@ -13,26 +14,26 @@ class _FindPageState extends State<FindPage> {
   // Dummy data
   final List<Event> events = [
     Event(
-          name: "yourmomshouse",
-          address: "111 El Camino",
-          date: DateTime(1),
-          url: "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-          imageurl: ""
-        ),
+        name: "yourmomshouse",
+        address: "111 El Camino",
+        date: DateTime(1),
+        url:
+            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+        imageurl: ""),
     Event(
-          name: "yourmomshouse",
-          address: "111 El Camino",
-          date: DateTime(1),
-          url: "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-          imageurl: ""
-        ),
+        name: "yourmomshouse",
+        address: "111 El Camino",
+        date: DateTime(1),
+        url:
+            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+        imageurl: ""),
     Event(
-          name: "yourmomshouse",
-          address: "111 El Camino",
-          date: DateTime(1),
-          url:"https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-          imageurl: ""
-        ),
+        name: "yourmomshouse",
+        address: "111 El Camino",
+        date: DateTime(1),
+        url:
+            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+        imageurl: ""),
   ];
 
   @override
@@ -51,9 +52,12 @@ class _FindPageState extends State<FindPage> {
         separatorBuilder: (BuildContext context, int index) => const Divider(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: () {},
         tooltip: 'Increment',
         child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: const BottomNavBar(
+        selectedIndex: 0,
       ),
     );
   }

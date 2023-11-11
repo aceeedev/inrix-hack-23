@@ -14,7 +14,11 @@ Future<List<Event>> getEvents(double lat, double long) async {
 
     List<Event> events = json
         .map((e) => Event(
-            name: 'name', address: 'address', date: DateTime.now(), url: 'url'))
+            name: 'name',
+            address: 'address',
+            date: DateTime.now(),
+            url: 'url',
+            imageurl: 'imageUrl'))
         .toList();
 
     return events;

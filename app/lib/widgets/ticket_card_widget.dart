@@ -6,7 +6,6 @@ class TicketCard extends StatelessWidget {
   const TicketCard({super.key, required this.event});
   final Event event;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Card(
