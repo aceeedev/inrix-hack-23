@@ -1,6 +1,8 @@
+import 'package:app/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/styles.dart';
 import 'package:app/pages/find_page.dart';
+import 'package:app/pages/saved_tickets_page.dart';
 
 /// Add this to every page that needs a bottom navbar.
 ///
@@ -37,8 +39,10 @@ class BottomNavBar extends StatelessWidget {
   void _onNavBarTap(BuildContext context, int newIndex) async {
     if (selectedIndex == newIndex) return;
 
-    List<Widget> pages = [
-      const FindPage(),
+    const List<Widget> pages = [
+      FindPage(),
+      SavedTicketsPage(),
+      MapPage(title: 'Maps Page')
     ];
 
     // run page specific code, if needed
@@ -48,7 +52,7 @@ class BottomNavBar extends StatelessWidget {
     }
 
     // send user to new page
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => pages[newIndex],
       ),
