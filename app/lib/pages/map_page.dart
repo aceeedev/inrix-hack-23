@@ -1,3 +1,4 @@
+import 'package:app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -29,23 +30,17 @@ class _MapPageState extends State<MapPage> {
       ),
       home: Scaffold(
         appBar: AppBar(
-            title: const Text('Sydney'), backgroundColor: Colors.green[700]),
+          title: const Text('Sydney'),
+          backgroundColor: Styles().mainColor,
+          titleTextStyle: const TextStyle(
+              color: Colors.white, fontFamily: 'JetBrains Mono'),
+        ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,
           ),
-          markers: {
-            const Marker(
-              markerId: MarkerId('Sydney'),
-              position: LatLng(-33.86, 151.20),
-              infoWindow: InfoWindow(
-                title: "Sydney",
-                snippet: "Capital of New South Wales",
-              ),
-            )
-          },
         ),
       ),
     );
