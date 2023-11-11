@@ -4,10 +4,36 @@ import 'package:app/models/event.dart';
 
 String apiUrl = '';
 
-Future<List<Event>> getEvents(double lat, double long) async {
+Future<List<Event>> findEvents() async {
+  // Dummy data
+  List<Event> events = [
+    Event(
+        name: "yourmomshouse",
+        address: "111 El Camino",
+        date: DateTime(1),
+        url:
+            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+        imageUrl: ""),
+    Event(
+        name: "yourmomshouse",
+        address: "111 El Camino",
+        date: DateTime(1),
+        url:
+            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+        imageUrl: ""),
+    Event(
+        name: "yourmomshouse",
+        address: "111 El Camino",
+        date: DateTime(1),
+        url:
+            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
+        imageUrl: ""),
+  ];
+  return events;
+
+  // actual code
   String endpoint = '/';
-  var response = await http.Client()
-      .get(Uri.parse('$apiUrl$endpoint?lat=$lat&long=$long'));
+  var response = await http.Client().get(Uri.parse('$apiUrl$endpoint'));
 
   if (response.statusCode == 200) {
     List<dynamic> json = jsonDecode(response.body);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/backend/flask_interface.dart';
 import 'package:app/models/event.dart';
 import 'package:app/widgets/tickets_list_widget.dart';
 import 'package:app/widgets/bottom_navbar_widget.dart';
@@ -11,43 +12,29 @@ class FindPage extends StatefulWidget {
 }
 
 class _FindPageState extends State<FindPage> {
-  // Dummy data
-  final List<Event> events = [
-    Event(
-        name: "yourmomshouse",
-        address: "111 El Camino",
-        date: DateTime(1),
-        url:
-            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: ""),
-    Event(
-        name: "yourmomshouse",
-        address: "111 El Camino",
-        date: DateTime(1),
-        url:
-            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: ""),
-    Event(
-        name: "yourmomshouse",
-        address: "111 El Camino",
-        date: DateTime(1),
-        url:
-            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: ""),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Title'),
+        title: const Text('Events Near You'),
       ),
-      body: TicketsList(events: events),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: FutureBuilder(
+        future: findEvents(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(
+                  child: Text('An error has occurred, ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              List<Event> foundEvents = snapshot.data!;
+
+              return TicketsList(events: foundEvents);
+            }
+          }
+
+          return const CircularProgressIndicator();
+        },
       ),
       bottomNavigationBar: const BottomNavBar(
         selectedIndex: 0,
