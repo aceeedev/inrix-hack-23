@@ -1,5 +1,6 @@
-import 'package:app/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:app/pages/home_page.dart';
+import 'package:app/widgets/gradient_button_widget.dart';
 
 class BeginPage extends StatelessWidget {
   const BeginPage({super.key});
@@ -16,13 +17,13 @@ class BeginPage extends StatelessWidget {
             'App Name',
           ),
           Text('App description'),
-          TextButton(
+          GradientButton(
               onPressed: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const HomePage(),
                     ),
                   ),
-              child: Text('Begin '))
+              child: Text('Begin'))
         ],
       ),
     ));
