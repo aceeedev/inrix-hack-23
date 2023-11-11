@@ -1,5 +1,5 @@
 import requests
-
+from pprint import pprint
 class TicketMasterServices:
 
     def run_get_tickets(): 
@@ -8,5 +8,13 @@ class TicketMasterServices:
 
         response = requests.get(url=url, params=payload)
         response = response.json()
-        
-        return response['_embedded']
+        eventList = []
+
+        for i in response['_embedded']['events']:
+            eventname = i['name']
+            # lat = i[]
+            # long = i[]
+            # print(eventname)
+            eventList.append({'name': eventname, })
+        pprint(eventList)
+TicketMasterServices.run_get_tickets()
