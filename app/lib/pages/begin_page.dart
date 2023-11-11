@@ -22,7 +22,7 @@ class BeginPage extends StatelessWidget {
           GradientButton(
               onPressed: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const HomePage(),
+                      builder: (context) => const MapPage(title: "map"),
                     ),
                   ),
               child: Text('Begin'))
