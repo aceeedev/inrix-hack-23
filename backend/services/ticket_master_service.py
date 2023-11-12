@@ -12,10 +12,19 @@ class TicketMasterServices:
 
         for i in response['_embedded']['events']:
             eventname = i['name']
-            # lat = i[]
-            # long = i[]
-            # print(eventname)
-            eventList.append({'name': eventname, })
-            
-        return eventList
+            # added coordinates to the dictionary
+            lat = i['_embedded']['venues'][0]['location']['latitude']
+            long = i['_embedded']['venues'][0]['location']['longitude']
+            # adding the address as another item in each dictionary
+            address = i['_embedded']['venues'][0]['address']['line1']
+            city = i['_embedded']['venues'][0]['city']['name']
+            state = i['_embedded']['venues'][0]['state']['stateCode']
+            location = ""
+            location = address + ", " + city + ", " + state
+            # imagelist is a list of the images 
+            imagelist = []
+            for j in i['images']:
+                imagelist.append(j['url'])
+            eventList.append({'name': eventname, 'lat': lat, 'long': long, 'location': location, 'imagelist': imagelist})
+        pprint(eventList)
 TicketMasterServices.run_get_tickets()
