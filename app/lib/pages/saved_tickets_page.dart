@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/styles.dart';
 import 'package:app/backend/db_manager.dart';
 import 'package:app/widgets/bottom_navbar_widget.dart';
 import 'package:app/widgets/tickets_list_widget.dart';
@@ -15,10 +16,6 @@ class _SavedTicketsPageState extends State<SavedTicketsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Saved Tickets'),
-      ),
       body: Center(
           child: FutureBuilder(
         future: DB.instance.getAllEvents(),

@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:app/widgets/gradient_button_widget.dart';
 import 'package:app/models/event.dart';
 
 class EventPage extends StatelessWidget {
@@ -9,19 +10,17 @@ class EventPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(event.name),
-        ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(event.name),
-              Text(event.address),
-              Text(DateFormat.yMMMEd().format(event.date)),
-              TextButton(onPressed: () {}, child: const Text('Route me'))
-            ],
-          ),
-        ));
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.network(event.imageUrl),
+          Text(event.name),
+          Text(event.address),
+          Text(DateFormat.yMMMEd().format(event.date)),
+          GradientButton(onPressed: () {}, child: const Text('Route me'))
+        ],
+      ),
+    ));
   }
 }
