@@ -3,7 +3,7 @@ import json
 from pprint import pprint
 import polyline
 
-from credentials_service import CredentialsService
+from services.credentials_service import CredentialsService
 
 class GoogleMapsService:
 
