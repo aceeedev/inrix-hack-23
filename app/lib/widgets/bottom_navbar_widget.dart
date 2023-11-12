@@ -19,11 +19,10 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Find Events'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.search), label: 'Saved Tickets'),
         BottomNavigationBarItem(
             icon: Icon(Icons.bookmark), label: 'Saved Tickets'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.navigation), label: 'Navigation'),
       ],
       backgroundColor: Styles().mainColor,
       selectedItemColor: Colors.white,
@@ -39,11 +38,7 @@ class BottomNavBar extends StatelessWidget {
   void _onNavBarTap(BuildContext context, int newIndex) async {
     if (selectedIndex == newIndex) return;
 
-    const List<Widget> pages = [
-      FindPage(),
-      SavedTicketsPage(),
-      MapPage(title: 'Maps Page')
-    ];
+    const List<Widget> pages = [FindPage(), SavedTicketsPage()];
 
     // run page specific code, if needed
     switch (newIndex) {

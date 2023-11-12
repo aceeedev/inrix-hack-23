@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/styles.dart';
 import 'package:app/widgets/gradient_button_widget.dart';
 import 'package:app/widgets/roads_gradient_widget.dart';
+import 'package:app/pages/map_page.dart';
 import 'package:app/models/event.dart';
 
 class EventPage extends StatelessWidget {
@@ -47,9 +48,8 @@ class EventPage extends StatelessWidget {
             Padding(
               padding: Styles().bottomButtonEdgeInset,
               child: GradientButton(
-                  onPressed: () {
-                    //TODO: add redirect to map page with routing
-                  },
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MapPage(event: event))),
                   child: Padding(
                     padding: Styles().largeButtonEdgeInset,
                     child: Text(

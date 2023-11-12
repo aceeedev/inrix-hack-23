@@ -1,16 +1,14 @@
-import 'package:app/pages/saved_tickets_page.dart';
 import 'package:app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:app/pages/begin_page.dart';
 import 'package:app/backend/flask_interface.dart';
-import 'package:app/models/route.dart';
+import 'package:app/models/event.dart';
+import 'package:app/models/parking_option.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.title});
-
-  final String title;
+  const MapPage({super.key, required this.event});
+  final Event event;
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -39,14 +37,14 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: getRoutes(),
+        future: getRoutes(widget.event.latitude, widget.event.longitude),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Center(
                   child: Text('An error has occurred, ${snapshot.error}'));
             } else if (snapshot.hasData) {
-              List<NavRoute> routes = snapshot.data!;
+              List<ParkingOption> routes = snapshot.data!;
 
               List<MaterialColor> lineColors = [
                 Colors.blue,

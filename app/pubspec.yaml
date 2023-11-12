@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.18.1
   hive_generator: ^2.0.1
   sliding_up_panel: ^2.0.0+1
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:
