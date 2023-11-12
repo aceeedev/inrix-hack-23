@@ -31,9 +31,9 @@ class _MapPageState extends State<MapPage> {
     points: <LatLng>[LatLng(37.7792079, -122.3900709), LatLng(37.7788438, -122.3905768), LatLng(37.779421, -122.390129), LatLng(37.7753048, -122.4189009), LatLng(37.7751531, -122.419041)] , // replace with temp points
     endCap: Cap.roundCap,
   );
-  Polyline transitline =
-      const Polyline(polylineId: PolylineId("awqeF|h_jVv@dATXCDMN"));
-  Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
+  // Polyline transitline =
+  //     const Polyline(polylineId: PolylineId("awqeF|h_jVv@dATXCDMN"));
+  // Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
   var parkSpots = <Marker>{const Marker(markerId: MarkerId('spot1'), position: LatLng(37.797891, -122.406749), )};
 
   @override
@@ -62,7 +62,8 @@ class _MapPageState extends State<MapPage> {
             // cloudMapId: '5b05b9f927bfcf34',  // javascript raster
             cloudMapId: '701a336f83a1aaa6', // static raster
             // cloudMapId: '74194f22342551fa',  // android
-            polylines: <Polyline>{driveline, transitline, returnline},
+            polylines: <Polyline>{driveline},
+            markers: parkSpots,
             initialCameraPosition: CameraPosition(
               target: _center,
               zoom: 11.0,

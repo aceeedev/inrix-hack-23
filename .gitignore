@@ -1,2 +1,5 @@
 app/ios/Runner.xcodeproj
 .env
+app/ios/Podfile.lock
+app/ios/Runner.xcodeproj/project.pbxproj
+app/ios/Podfile.lock
