@@ -1,17 +1,17 @@
 import requests
 from pprint import pprint
 import json
-
 from credentials_service import CredentialsService
-
 from datetime import datetime as dt
 
 class InrixServices:
-
-    def run_get_parking(lat, long, radius, start_time, end_time): 
+    def __init__(self) -> None:
+        self._credential_services = CredentialsService()
+        
+    def run_get_parking(self, lat, long, radius, start_time, end_time): 
         url = 'https://api.iq.inrix.com/lots/v3'
 
-        headers = {'Authorization': "Bearer" + CredentialsService().get_token(),
+        headers = {'Authorization': "Bearer" + self._credential_services.get_token(),
                    'accept': "application/json"
         }
 
@@ -31,9 +31,14 @@ class InrixServices:
 
         pprint(response)
         
-    def _filter_parking(self, start_time, end_time) -> bool:
-        # non-restricted and non-free and spaces > 20 and hours within start and end time 
+    def _query_parking(self) -> json:
+        token = self._credential_services.get_token()
         
+    def _good_parking(self, start_time, end_time) -> bool:
+        # non-restricted and non-free and spaces > 20 and hours within start and end time 
+        pass
+
+    def _filter_parking(self, results, start_time, end_time) -> list[any]:
         pass
 
 InrixServices.run_get_parking(37.7773, -122.4196, 5000)

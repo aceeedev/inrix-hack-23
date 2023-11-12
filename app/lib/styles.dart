@@ -12,7 +12,7 @@ class Styles {
   Color get mainColor => _mainColor;
   LinearGradient get linearGradient => _linearGradient;
 
-  // Text styles:
+  // Text Styles:
   static const TextStyle _defaultTextStyle =
       TextStyle(color: Colors.black, fontFamily: _fontFamily);
   static const TextStyle _mediumTextStyle = TextStyle(
@@ -29,4 +29,13 @@ class Styles {
   TextStyle get defaultTextStyle => _defaultTextStyle;
   TextStyle get mediumTextStyle => _mediumTextStyle;
   TextStyle get largeTextStyle => _largeTextStyle;
+
+  // Padding:
+  static const EdgeInsets _bottomButtonEdgeInset =
+      EdgeInsets.only(bottom: 50.0);
+  static const EdgeInsets _largeButtonEdgeInset =
+      EdgeInsets.fromLTRB(14.0, 5.0, 14.0, 5.0);
+
+  EdgeInsets get bottomButtonEdgeInset => _bottomButtonEdgeInset;
+  EdgeInsets get largeButtonEdgeInset => _largeButtonEdgeInset;
 }
