@@ -23,6 +23,7 @@ class CombinerService:
             route_option_to_concert = self._google_maps_service.run_get_route(parking_lat, parking_long, lat_dest, long_dest)
             route_option_to_parking = self._google_maps_service.run_get_route(lat_source, long_source, parking_lat, parking_long, mode="driving")
             route_option_to_parking["steps"] = route_option_to_parking["steps"][0]
+            print("DEBUG2: ", parking["cost"])
             route_states = {
                 "totalTime": route_option_to_concert["time"] + route_option_to_parking["time"],
                 "totalTimeText": self._format_time_text(route_option_to_concert["time"] + route_option_to_parking["time"]),
@@ -33,7 +34,8 @@ class CombinerService:
         
             route_options_to_concert.append(route_states)
         
-        return heapq.nsmallest(n=(min(5, len(route_options_to_concert))), iterable=route_options_to_concert, key=lambda x: ((int(x["routeToEvent"]["time"])/60)**2)  + (int(x["parkingCost"])**2))
+        return heapq.nsmallest(n=(min(5, len(route_options_to_concert))), iterable=route_options_to_concert, key=lambda x: int(x["routeToEvent"]["time"]))
+        # return heapq.nsmallest(n=(min(5, len(route_options_to_concert))), iterable=route_options_to_concert, key=lambda x: ((int(x["routeToEvent"]["time"])/60)**2)  + (int(x["parkingCost"])**2))
         
     def _format_time_text(self, seconds: int) -> str: 
         res = "" 
@@ -60,5 +62,5 @@ class CombinerService:
         
     
 # driver = CombinerService()
-# res = driver.get_all_parking_options(100, 100, 37.8024, -122.4058, 500)
-# print(res)
+# res = driver.get_all_parking_options(37.349005996578114, -121.936651011974, 37.8024, -122.4058, 2500, "2023-11-12T00:00")
+# pprint(res)

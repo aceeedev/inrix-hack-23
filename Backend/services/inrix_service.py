@@ -41,7 +41,7 @@ class InrixServices:
         
     def _good_parking(self, option: json, start_time = None) -> bool:
         # non-restricted and non-free and spaces > 20 and hours within start and end time 
-        valid_spot = option["type"] != "Restricted" and option["spacesTotal"] >= 20 and option["isOpen"]
+        valid_spot = option["type"] != "Restricted" and option["spacesTotal"] >= 20 and option["isOpen"] and option["calculatedRates"]
         return valid_spot
 
     def _filter_parking(self, results, start_time = None) -> list[any]:
