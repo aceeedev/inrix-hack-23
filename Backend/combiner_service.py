@@ -11,9 +11,13 @@ class CombinerService:
         parking_options = self._inrix_service.run_get_parking(lat_dest, long_dest, radius)
 
         route_options = []
+        print(len(parking_options))
         for parking in parking_options: 
             parking_long, parking_lat = parking["cords"]
-            route_option = self._google_maps_service.run_get_route(parking_lat, parking_lat, lat_dest, long_dest)
+            print("DEBUG: parking lat long ", parking_long, parking_lat)
+            # print("DEBUG: here")
+            route_option = self._google_maps_service.run_get_route(parking_lat, parking_long, lat_dest, long_dest)
+            # # print("DEBUG: here2")
             route_options.append(route_options)
         return route_options
     

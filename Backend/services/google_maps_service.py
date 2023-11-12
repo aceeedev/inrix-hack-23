@@ -7,7 +7,7 @@ from services.credentials_service import CredentialsService
 
 class GoogleMapsService:
 
-    def run_get_route(lat1, long1, lat2, long2, mode="transit", departure_time=None): 
+    def run_get_route(self, lat1, long1, lat2, long2, mode="transit", departure_time=None): 
         url = 'https://maps.googleapis.com/maps/api/directions/json'
 
         payload = {'key': CredentialsService().GOOGLE_API_KEY,
@@ -19,6 +19,12 @@ class GoogleMapsService:
         response = requests.get(url=url, params=payload)
         response = response.json()
         
+        # print("DEBUG: run google")
+        # print(lat1, long1)
+
+        # with open("sample2.json", "w") as outfile:
+        #         json.dump(response, outfile)
+
         # filter 
 
         start_info = response["routes"][0]["legs"][0]["start_address"]
@@ -53,4 +59,4 @@ class GoogleMapsService:
         #     json.dump(res, outfile)
         return res
 
-GoogleMapsService.run_get_route(37.7786, -122.3893, 37.8024, -122.4058)
+# GoogleMapsService().run_get_route(37.7786, -122.3893, 37.8024, -122.4058)
