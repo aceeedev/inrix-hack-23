@@ -30,7 +30,10 @@ class _SavedTicketsPageState extends State<SavedTicketsPage> {
             } else if (snapshot.hasData) {
               List<Event> savedEvents = snapshot.data!;
 
-              return TicketsList(events: savedEvents);
+              return TicketsList(
+                events: savedEvents,
+                findPage: false,
+              );
             }
           }
 

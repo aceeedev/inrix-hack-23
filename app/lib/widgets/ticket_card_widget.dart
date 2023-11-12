@@ -5,8 +5,9 @@ import 'package:app/pages/event_page.dart';
 import 'package:app/models/event.dart';
 
 class TicketCard extends StatelessWidget {
-  const TicketCard({super.key, required this.event});
+  const TicketCard({super.key, required this.event, required this.action});
   final Event event;
+  final Widget action;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +24,7 @@ class TicketCard extends StatelessWidget {
                   ),
                 ),
             child: const Text('Event Info')),
-        TextButton(
-            onPressed: () async => DB.instance.saveEvent(event),
-            child: const Text('Save ticket')),
-        TextButton(
-            onPressed: () async => DB.instance.deleteEvent(event.name),
-            child: const Text('Delete ticket'))
+        action,
       ],
     ));
   }
