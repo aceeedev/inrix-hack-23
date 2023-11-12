@@ -31,7 +31,7 @@ Future<List<Event>> findEvents() async {
   }
 }
 
-Future<List<LatLng>> getRoutes() async {
+Future<List<NavRoute>> getRoutes() async {
   List<LatLng> dummyData = [
     (37.77921, -122.39007),
     (37.77893, -122.39042),
@@ -331,7 +331,7 @@ Future<List<LatLng>> getRoutes() async {
     (37.80244, -122.40571)
   ].map((e) => LatLng(e.$1, e.$2)).toList();
 
-  return dummyData;
+  return [NavRoute(name: 'name', latLongPairs: dummyData)];
 
   String endpoint = '/';
   var response = await http.Client().get(Uri.parse('$apiUrl$endpoint'));
