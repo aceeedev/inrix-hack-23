@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from services.ticket_master_service import TicketMasterServices
-#from services.parking_service import ParkingService
+from services.inrix_service import InrixServices
+
 
 app = Flask(__name__)
 
@@ -14,6 +15,11 @@ def get_tickets():
 
 @app.route("/off-street")
 def get_off_street_parking():
-    parking_service = ParkingService()
+    lat = request.args.get('lat', default = 0, type = float)
+    long =  request.args.get('long', default = 0, type = float)
+    radius = request.args.get("radius", default=1500, type=float)
+    
+    inrix_service = InrixServices()
+    return jsonify(inrix_service.run_get_parking(lat, long, radius))
     
 app.run(host="0.0.0.0")
