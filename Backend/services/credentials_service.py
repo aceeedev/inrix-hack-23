@@ -43,4 +43,3 @@ class CredentialsService:
     def _valid_token(self) -> bool:
         now = dt.utcnow()
         return now < self.expiration_date
-
