@@ -20,9 +20,9 @@ Future<List<Event>> findEvents() async {
         name: "yourmomshouse",
         address: "11 El Camino",
         date: DateTime(1),
-        url:
-            "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: "",
+        url: "",
+        imageUrl:
+            "https://static.wikia.nocookie.net/owlsome/images/6/62/Adam_Young.jpg/revision/latest?cb=20130923074107",
         latitude: 0,
         longitude: 0),
     Event(
@@ -31,7 +31,8 @@ Future<List<Event>> findEvents() async {
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: "",
+        imageUrl:
+            "https://static.wikia.nocookie.net/owlsome/images/6/62/Adam_Young.jpg/revision/latest?cb=20130923074107",
         latitude: 0,
         longitude: 0),
   ];
