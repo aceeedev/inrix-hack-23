@@ -63,7 +63,7 @@ class CombinerService:
     def _flatten_nested_cords(self, steps) -> list:
         res = []
         for step in steps:
-            res.extend(step["path"])
+            res.extend(step["path"][::5])
         return res
         
     
