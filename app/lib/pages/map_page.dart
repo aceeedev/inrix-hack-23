@@ -35,6 +35,7 @@ class _MapPageState extends State<MapPage> {
           ])
         ])
   ];
+  // late LatLng startPos = const LatLng(37.7775, -122.416389);
   late int parkingOptionIndex = 0;
 
   void _onMapCreated(GoogleMapController controller) {
@@ -99,6 +100,26 @@ class _MapPageState extends State<MapPage> {
                   : Colors.green));
     }
 
+    // get the starting coordinate
+    LatLng startPos =
+        parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs[0];
+    BitmapDescriptor startIcon = BitmapDescriptor.fromAssetImage(ImageConfiguration(), assetName)
+    Marker startMarker =
+        Marker(markerId: const MarkerId('startMarker'), position: startPos);
+
+    // calculate the last coordinate index
+    var lastNavRouteI = parkingOptions[parkingOptionIndex].navRoutes.length - 1;
+    var lastLatPongPairsI = parkingOptions[parkingOptionIndex]
+            .navRoutes[lastNavRouteI]
+            .latLongPairs
+            .length -
+        1;
+    LatLng endPos = parkingOptions[parkingOptionIndex]
+        .navRoutes[lastNavRouteI]
+        .latLongPairs[lastLatPongPairsI];
+    Marker endMarker =
+        Marker(markerId: const MarkerId('endMarker'), position: endPos);
+
     // example
     // Polyline driveline = const Polyline(
     //   polylineId: PolylineId("driveline"),
@@ -132,6 +153,7 @@ class _MapPageState extends State<MapPage> {
               // cloudMapId: '701a336f83a1aaa6', // static raster
               // cloudMapId: '74194f22342551fa',  // android
               polylines: polyset,
+              markers: {startMarker, endMarker},
               initialCameraPosition: CameraPosition(
                 target: _center,
                 zoom: 11.0,
