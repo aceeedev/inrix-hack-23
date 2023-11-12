@@ -14,7 +14,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(-33.86, 151.20);
+  final LatLng _center = const LatLng(37.7775, -122.416389);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -30,13 +30,14 @@ class _MapPageState extends State<MapPage> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Sydney'),
+          title: const Text("Routing"),
           backgroundColor: Styles().mainColor,
           titleTextStyle: const TextStyle(
               color: Colors.white, fontFamily: 'JetBrains Mono'),
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
+          cloudMapId: '40bae229feee19e5',
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,
