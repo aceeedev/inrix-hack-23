@@ -6,7 +6,6 @@ import 'package:app/backend/flask_interface.dart';
 import 'package:app/models/event.dart';
 import 'package:app/models/parking_option.dart';
 import 'package:app/models/nav_route.dart';
-import 'dart:ui';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.event, required this.parkingRadius});
@@ -40,7 +39,10 @@ class _MapPageState extends State<MapPage> {
   // late LatLng startPos = const LatLng(37.7775, -122.416389);
   late int parkingOptionIndex = 0;
 
-  late BitmapDescriptor startIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+  LatLng startPos = const LatLng(99, 99);
+  LatLng endPos = const LatLng(99, 99);
+  late BitmapDescriptor startIcon =
+      BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow);
   late BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
 
   void _onMapCreated(GoogleMapController controller) {
@@ -74,8 +76,12 @@ class _MapPageState extends State<MapPage> {
     List<ParkingOption> preRoutes = await getRoutes(
         widget.event.latitude, widget.event.longitude, widget.parkingRadius);
 
-    startIcon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48, 48)), 'assets/icons/home_pin.png');
-    endIcon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48, 48)), 'assets/icons/flag_circle.png');
+    startIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/icons/home_pin.png');
+    endIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/icons/flag_circle.png');
 
     setState(() {
       parkingOptions = preRoutes;
@@ -101,6 +107,20 @@ class _MapPageState extends State<MapPage> {
       // orange if transit
       // green if walk
 
+      // determine color
+      Color polylineColor = Colors.black;
+      switch (parkingOptions[parkingOptionIndex].navRoutes[routeIndex].mode) {
+        case 'TRANSIT':
+          polylineColor = Colors.purple;
+          break;
+        case 'DRIVING':
+          polylineColor = Colors.indigo;
+          break;
+        case 'WALKING':
+          polylineColor = Colors.pinkAccent;
+          break;
+      }
+
       polyset.add(Polyline(
           polylineId: PolylineId(parkingOptions[parkingOptionIndex]
               .navRoutes[routeIndex]
@@ -109,11 +129,7 @@ class _MapPageState extends State<MapPage> {
           points: parkingOptions[parkingOptionIndex]
               .navRoutes[routeIndex]
               .latLongPairs,
-          color:
-              parkingOptions[parkingOptionIndex].navRoutes[routeIndex].mode ==
-                      "TRANSIT"
-                  ? Colors.purple
-                  : Colors.pinkAccent));
+          color: polylineColor));
     }
 
     // get the starting coordinate
@@ -135,8 +151,8 @@ class _MapPageState extends State<MapPage> {
     LatLng endPos = parkingOptions[parkingOptionIndex]
         .navRoutes[lastNavRouteI]
         .latLongPairs[lastLatPongPairsI];
-    Marker endMarker =
-        Marker(markerId: const MarkerId('endMarker'), position: endPos, icon: endIcon);
+    Marker endMarker = Marker(
+        markerId: const MarkerId('endMarker'), position: endPos, icon: endIcon);
 
     // example
     // Polyline driveline = const Polyline(
