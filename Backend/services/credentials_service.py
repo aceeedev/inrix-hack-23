@@ -13,8 +13,8 @@ class CredentialsService:
     def _get_new_token(self) -> None: 
         url = "https://api.iq.inrix.com/auth/v1/appToken"
         query_params = {
-            "appId": "2lsj0ylb5d",
-            "hashToken": "MmxzajB5bGI1ZHxoWmt0NVpEdkw1YWl2Rjk1eFVKaFU5YU1qTXlqbXZVVTk4VWlwQUpx",
+            "appId": self.APP_ID,
+            "hashToken": self.HASH_TOKEN,
         }
         
         req = requests.get(url=url, params=query_params).json()
