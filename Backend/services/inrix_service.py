@@ -23,7 +23,7 @@ class InrixServices:
             'point': str(lat) + "|" + str(long),
             'radius': int(radius),
             'locale': 'en-US',
-            'limit': 50,
+            'limit': 20,
         }
 
         response = requests.get(url=url, headers=headers, params=payload)

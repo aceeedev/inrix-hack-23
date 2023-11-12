@@ -16,13 +16,15 @@ def get_tickets():
 
 @app.route("/parking-options")
 def get_parking_options():
+    lat_source = request.args.get("latSource", default = 0, type=float)
+    long_source = request.args.get("longSource", default = 0, type=float)
     lat_dest = request.args.get("latDest", default = 0, type=float)
     long_dest = request.args.get("longDest", default = 0, type=float)
     radius = request.args.get("radius", default = 0, type=float)
     
     combiner_service = CombinerService()
     print(lat_dest, long_dest, radius)
-    res = combiner_service.get_all_parking_options(lat_dest=lat_dest, long_dest=long_dest, radius=radius)    
+    res = combiner_service.get_all_parking_options(lat_source, long_source, lat_dest=lat_dest, long_dest=long_dest, radius=radius)    
     if not res:
         print("here")
         return jsonify({"message": "internal service error"}, 500)
