@@ -83,7 +83,6 @@ flutter:
 
   assets:
      - assets/images/roads.png
-     - assets/images/Background.png
      - assets/icons/flag_circle.svg
      - assets/icons/flag.svg
      - assets/icons/home_pin.svg
