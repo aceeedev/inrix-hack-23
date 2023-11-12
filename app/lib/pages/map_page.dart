@@ -43,6 +43,7 @@ class _MapPageState extends State<MapPage> {
   late BitmapDescriptor startIcon =
       BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow);
   late BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor midIcon;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -79,6 +80,8 @@ class _MapPageState extends State<MapPage> {
     startIcon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(48, 48)),
         'assets/icons/home_pin.png');
+    midIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)), 'assets/icons/train.png');
     endIcon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(48, 48)),
         'assets/icons/flag_circle.png');
@@ -112,15 +115,26 @@ class _MapPageState extends State<MapPage> {
       // determine color
       Color polylineColor = Colors.black;
       switch (parkingOptions[parkingOptionIndex].navRoutes[routeIndex].mode) {
-        case 'TRANSIT':
-          polylineColor = Colors.purple;
-          break;
-        case 'DRIVING':
-          polylineColor = Colors.indigo;
-          break;
         case 'WALKING':
-          polylineColor = Colors.pinkAccent;
-          break;
+          {
+            polylineColor = Colors.pinkAccent;
+            break;
+          }
+        case 'TRANSIT':
+          {
+            polylineColor = Colors.purple;
+            break;
+          }
+        case 'DRIVING':
+          {
+            polylineColor = Colors.indigo;
+            break;
+          }
+        default:
+          {
+            polylineColor = Colors.white;
+            break;
+          }
       }
 
       polyset.add(Polyline(
@@ -142,6 +156,13 @@ class _MapPageState extends State<MapPage> {
         markerId: const MarkerId('startMarker'),
         position: startPos,
         icon: startIcon);
+
+    // calculate the mid index
+    LatLng midPos = parkingOptions[parkingOptionIndex].navRoutes[1].latLongPairs[0];
+    Marker midMarker = Marker(
+        markerId: const MarkerId('startMarker'),
+        position: startPos,
+        icon: midIcon);
 
     // calculate the last coordinate index
     var lastNavRouteI = parkingOptions[parkingOptionIndex].navRoutes.length - 1;
@@ -204,7 +225,7 @@ class _MapPageState extends State<MapPage> {
               // cloudMapId: '701a336f83a1aaa6', // static raster
               // cloudMapId: '74194f22342551fa',  // android
               polylines: polyset,
-              markers: {startMarker, endMarker},
+              markers: {startMarker, midMarker, endMarker},
               initialCameraPosition: CameraPosition(
                 target: _center,
                 zoom: 11.0,
