@@ -158,7 +158,11 @@ class _MapPageState extends State<MapPage> {
         icon: startIcon);
 
     // calculate the mid index
-    LatLng midPos = parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs[parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs.length - 1];
+    LatLng midPos = parkingOptions[parkingOptionIndex]
+            .navRoutes[0]
+            .latLongPairs[
+        parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs.length -
+            1];
     Marker midMarker = Marker(
         markerId: const MarkerId('startMarker'),
         position: midPos,

@@ -13,7 +13,6 @@ class TicketCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const IconData calendar = IconData(0xe122, fontFamily: 'MaterialIcons');
-    const IconData info = IconData(0xe33d, fontFamily: 'MaterialIcons');
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
