@@ -5,10 +5,13 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:app/backend/flask_interface.dart';
 import 'package:app/models/event.dart';
 import 'package:app/models/parking_option.dart';
+import 'package:app/models/nav_route.dart';
+import 'dart:ui';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.event});
+  const MapPage({super.key, required this.event, required this.parkingRadius});
   final Event event;
+  final int parkingRadius;
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -19,6 +22,27 @@ class _MapPageState extends State<MapPage> {
 
   final LatLng _center = const LatLng(37.7775, -122.416389);
 
+  late List<ParkingOption> parkingOptions = [
+    ParkingOption(
+        startAddress: 'startAddress',
+        endAddress: 'endAddress',
+        timeText: 'timeText',
+        time: 1,
+        fareText: 'fareText',
+        fare: 1,
+        navRoutes: [
+          NavRoute(mode: 'TRANSIT', latLongPairs: const [
+            LatLng(37.7775, -122.416389),
+            LatLng(37.7775, -122.416389)
+          ])
+        ])
+  ];
+  // late LatLng startPos = const LatLng(37.7775, -122.416389);
+  late int parkingOptionIndex = 0;
+
+  late BitmapDescriptor startIcon = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -26,102 +50,250 @@ class _MapPageState extends State<MapPage> {
   // Polyline transitline =
   //     const Polyline(polylineId: PolylineId("awqeF|h_jVv@dATXCDMN"));
   // Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
-  var parkSpots = <Marker>{
-    const Marker(
-      markerId: MarkerId('spot1'),
-      position: LatLng(37.797891, -122.406749),
-    )
-  };
+  // var parkSpots = <Marker>{
+  //   const Marker(
+  //     markerId: MarkerId('spot1'),
+  //     position: LatLng(37.797891, -122.406749),
+  //   )
+  // };
+
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/home_pin.png')
+        .then((onValue) {
+      startIcon = onValue;
+    });
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/flag_circle.png')
+        .then((onValue) {
+      endIcon = onValue;
+    });
+    asyncFunction();
+  }
+
+  Future asyncFunction() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    List<ParkingOption> preRoutes = await getRoutes(
+        widget.event.latitude, widget.event.longitude, widget.parkingRadius);
+
+    setState(() {
+      parkingOptions = preRoutes;
+      parkingOptionIndex = 0;
+
+      isLoading = false;
+    });
+  }
+
+  Future<Map<String, dynamic>> getFutures() async {
+    // List<Event> foodEvents =
+    //     await findEvents(lat, long, 'homeless soup kitchen');
+    // List<Event> shelterEvents = await findEvents(lat, long, 'homeless shelter');
+    BitmapDescriptor genericMarker = await iconDataToBitmap(Icons.person);
+
+    // await DB.instance.saveAllEvents([...foodEvents, ...shelterEvents]);
+
+    return {'genericMarker': genericMarker};
+  }
+
+  Future<BitmapDescriptor> iconDataToBitmap(IconData iconData) async {
+    final pictureRecorder = PictureRecorder();
+    final canvas = Canvas(pictureRecorder);
+
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
+    final iconStr = String.fromCharCode(iconData.codePoint);
+
+    textPainter.text = TextSpan(
+        text: iconStr,
+        style: TextStyle(
+          letterSpacing: 0.0,
+          fontSize: 96.0,
+          fontFamily: iconData.fontFamily,
+          color: Colors.red,
+        ));
+    textPainter.layout();
+    textPainter.paint(canvas, const Offset(0.0, 0.0));
+
+    final picture = pictureRecorder.endRecording();
+    final image = await picture.toImage(96, 96);
+    final bytes = await image.toByteData(format: ImageByteFormat.png);
+
+    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
+  }
 
   @override
   Widget build(BuildContext context) {
+    // List<MaterialColor> lineColors = [
+    //   Colors.blue,
+    //   Colors.orange,
+    //   Colors.red
+    // ];
+
+    Set<Polyline> polyset = {};
+    for (int routeIndex = 0;
+        routeIndex < parkingOptions[parkingOptionIndex].navRoutes.length;
+        routeIndex++) {
+      // parkingOptions[index]
+      // orange if transit
+      // green if walk
+
+      polyset.add(Polyline(
+          polylineId: PolylineId(parkingOptions[parkingOptionIndex]
+              .navRoutes[routeIndex]
+              .latLongPairs[0]
+              .toString()),
+          points: parkingOptions[parkingOptionIndex]
+              .navRoutes[routeIndex]
+              .latLongPairs,
+          color:
+              parkingOptions[parkingOptionIndex].navRoutes[routeIndex].mode ==
+                      "TRANSIT"
+                  ? Colors.orange
+                  : Colors.green));
+    }
+
+    // get the starting coordinate
+    LatLng startPos =
+        parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs[0];
+    // BitmapDescriptor startIcon = BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/icons/home_pin.svg').then((onValue) {myIcon = onValue});
+    Marker startMarker = Marker(
+        markerId: const MarkerId('startMarker'),
+        position: startPos,
+        icon: startIcon);
+
+    // calculate the last coordinate index
+    var lastNavRouteI = parkingOptions[parkingOptionIndex].navRoutes.length - 1;
+    var lastLatPongPairsI = parkingOptions[parkingOptionIndex]
+            .navRoutes[lastNavRouteI]
+            .latLongPairs
+            .length -
+        1;
+    LatLng endPos = parkingOptions[parkingOptionIndex]
+        .navRoutes[lastNavRouteI]
+        .latLongPairs[lastLatPongPairsI];
+    Marker endMarker =
+        Marker(markerId: const MarkerId('endMarker'), position: endPos);
+
+    // example
+    // Polyline driveline = const Polyline(
+    //   polylineId: PolylineId("driveline"),
+    //   color: Colors.blue,
+    //   points: [LatLng(37.7775, -122.416389)], // replace with temp points
+    //   endCap: Cap.roundCap,
+    // );
+
     return Scaffold(
-      body: FutureBuilder(
-        future: getRoutes(widget.event.latitude, widget.event.longitude),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Center(
-                  child: Text('An error has occurred, ${snapshot.error}'));
-            } else if (snapshot.hasData) {
-              List<ParkingOption> routes = snapshot.data!;
-
-              List<MaterialColor> lineColors = [
-                Colors.blue,
-                Colors.orange,
-                Colors.red
-              ];
-
-              Set<Polyline> polyset = {};
-              var index = 0;
-              print(routes[20]);
-              while (routes[index] != null) {
-                polyset.add(Polyline(
-                    polylineId: PolylineId(routes[index].name),
-                    points: routes[index].latLongPairs,
-                    color: lineColors[index]));
-              }
-              for (int loop = 0; loop <= 0; loop++) {}
-
-              // example
-              // Polyline driveline = const Polyline(
-              //   polylineId: PolylineId("driveline"),
-              //   color: Colors.blue,
-              //   points: [LatLng(37.7775, -122.416389)], // replace with temp points
-              //   endCap: Cap.roundCap,
-              // );
-
-              return SlidingUpPanel(
-                panel: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'Route',
-                        style: Styles().largeTextStyle,
-                      ),
-                    ),
-                  ],
+      body: SlidingUpPanel(
+        panel: Column(
+          children: [
+            const Icon(
+              Icons.expand_less,
+              size: 48.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                'Parking Options',
+                style: Styles().largeTextStyle,
+              ),
+            ),
+            if (isLoading)
+              const Center(child: CircularProgressIndicator())
+            else
+              ..._getRouteDescriptions()
+          ],
+        ),
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
+        body: Stack(
+          children: [
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              cloudMapId: '40bae229feee19e5', // javascript vector
+              // cloudMapId: '5b05b9f927bfcf34',  // javascript raster
+              // cloudMapId: '701a336f83a1aaa6', // static raster
+              // cloudMapId: '74194f22342551fa',  // android
+              polylines: polyset,
+              markers: {startMarker, endMarker},
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 11.0,
+              ),
+              myLocationButtonEnabled: false,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 32, left: 16),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style:
+                      const ButtonStyle(splashFactory: NoSplash.splashFactory),
+                  child: const Icon(Icons.arrow_back_ios_new),
                 ),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(18.0),
-                    topRight: Radius.circular(18.0)),
-                body: Stack(
-                  children: [
-                    GoogleMap(
-                      onMapCreated: _onMapCreated,
-                      cloudMapId: '40bae229feee19e5', // javascript vector
-                      // cloudMapId: '5b05b9f927bfcf34',  // javascript raster
-                      // cloudMapId: '701a336f83a1aaa6', // static raster
-                      // cloudMapId: '74194f22342551fa',  // android
-                      polylines: polyset,
-                      markers: parkSpots,
-                      initialCameraPosition: CameraPosition(
-                        target: _center,
-                        zoom: 11.0,
-                      ),
-                      myLocationButtonEnabled: false,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 32, left: 16),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          style: const ButtonStyle(
-                              splashFactory: NoSplash.splashFactory),
-                          child: const Icon(Icons.arrow_back_ios_new),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  List<Widget> _getRouteDescriptions() {
+    List<Widget> routeDescriptions = [];
+    for (int i = 0; i < parkingOptions.length; i++) {
+      ParkingOption parkingOption = parkingOptions[i];
+
+      List<Widget> directions = [];
+      for (NavRoute navRoute in parkingOption.navRoutes) {
+        directions.add(Text(
+          navRoute.mode,
+          style: Styles().defaultTextStyle,
+        ));
+      }
+
+      routeDescriptions.add(GestureDetector(
+          onTap: () => setState(() => parkingOptionIndex = i),
+          child: Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Styles().borderColor, width: 2.5),
+                borderRadius: BorderRadius.circular(20.0), //<-- SEE HERE
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      parkingOption.endAddress,
+                      style: Styles().mediumTextStyle,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.attach_money),
+                        Text(
+                          parkingOption.fareText
+                              .substring(1, parkingOption.fareText.length),
+                          style: Styles().defaultTextStyle,
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: Icon(Icons.timer_outlined)),
+                        Text(
+                          parkingOption.timeText,
+                          style: Styles().defaultTextStyle,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ))));
+    }
+
+    return routeDescriptions;
   }
 }

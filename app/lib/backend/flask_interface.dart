@@ -36,7 +36,8 @@ Future<List<Event>> findEvents() async {
 
 /// Returns a [List] of parking options where each option is a [List] of the
 /// [NavRoute] for that option
-Future<List<ParkingOption>> getRoutes(double eventLat, double eventLong) async {
+Future<List<ParkingOption>> getRoutes(
+    double eventLat, double eventLong, int parkingRadius) async {
   // get user's position
   Position userPosition = await getUserPosition();
   double userLat = userPosition.latitude;
@@ -44,8 +45,7 @@ Future<List<ParkingOption>> getRoutes(double eventLat, double eventLong) async {
 
   String endpoint = '/';
   /*var response = await http.Client().get(Uri.parse(
-      '$apiUrl$endpoint?lat=$eventLat&long=$eventLong&userLat=$userLat&userLong=$userLong'))*/
-  ;
+      '$apiUrl$endpoint?lat=$eventLat&long=$eventLong&userLat=$userLat&userLong=$userLong&radius=$parkingRadius'));*/
 
   var response = await http.Client().get(Uri.parse('https://google.com'));
 

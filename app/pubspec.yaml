@@ -83,6 +83,9 @@ flutter:
 
   assets:
      - assets/images/roads.png
+     - assets/icons/flag_circle.svg
+     - assets/icons/flag.svg
+     - assets/icons/home_pin.svg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
