@@ -43,7 +43,7 @@ class _MapPageState extends State<MapPage> {
   late BitmapDescriptor startIcon =
       BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueYellow);
   late BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
-  late BitmapDescriptor midIcon;
+  late BitmapDescriptor midIcon = BitmapDescriptor.defaultMarker;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -158,10 +158,10 @@ class _MapPageState extends State<MapPage> {
         icon: startIcon);
 
     // calculate the mid index
-    LatLng midPos = parkingOptions[parkingOptionIndex].navRoutes[1].latLongPairs[0];
+    LatLng midPos = parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs[parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs.length - 1];
     Marker midMarker = Marker(
         markerId: const MarkerId('startMarker'),
-        position: startPos,
+        position: midPos,
         icon: midIcon);
 
     // calculate the last coordinate index
