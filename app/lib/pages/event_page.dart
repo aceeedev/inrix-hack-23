@@ -45,12 +45,21 @@ class _EventPageState extends State<EventPage> {
                     fit: BoxFit.cover,
                   )),
             ),
-            Text(
-              widget.event.name,
-              style: Styles().largeTextStyle,
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                widget.event.name,
+                style: Styles().largeTextStyle,
+              ),
             ),
-            Text(widget.event.address),
-            Text(DateFormat.yMMMEd().format(widget.event.date)),
+            Text(
+              widget.event.address,
+              style: Styles().defaultTextStyle,
+            ),
+            Text(
+              DateFormat.yMMMEd().format(widget.event.date),
+              style: Styles().defaultTextStyle,
+            ),
             const Spacer(),
             Text('Parking Distance', style: Styles().mediumTextStyle),
             Text('${(_sliderValue / 1609.34).toStringAsFixed(2)} miles',
@@ -59,7 +68,7 @@ class _EventPageState extends State<EventPage> {
               padding: const EdgeInsets.all(8.0),
               child: Slider(
                 value: _sliderValue,
-                max: 2500,
+                max: 3500,
                 min: 200, // ~0.1 a mile in meters
                 divisions: 100,
                 onChanged: (double value) =>

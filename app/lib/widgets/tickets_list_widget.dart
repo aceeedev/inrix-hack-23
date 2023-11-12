@@ -36,7 +36,7 @@ class _TicketsListState extends State<TicketsList> {
                       onPressed: () async {
                         await DB.instance.saveEvent(event);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.bookmark_outline,
                         color: Colors.white,
                       ))

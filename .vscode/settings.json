@@ -1,7 +1,14 @@
 {
     "cSpell.words": [
         "geolocator",
+        "imagelist",
         "Inrix",
-        "jsonify"
+        "jsonify",
+        "Polyline",
+        "polylines",
+        "polyset",
+        "returnline",
+        "Swifty",
+        "transitline"
     ]
 }
