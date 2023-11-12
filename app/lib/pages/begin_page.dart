@@ -22,7 +22,7 @@ class BeginPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pellentesque, sapien quis malesuada varius, erat odio auctor nunc, eget aliquam felis mi eget elit. ',
+              'Seamless parking, stress-free transit, and immersion in the concert experience.',
               textAlign: TextAlign.center,
               style: Styles().defaultTextStyle,
             ),

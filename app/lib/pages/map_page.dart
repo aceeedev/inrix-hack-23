@@ -24,12 +24,11 @@ class _MapPageState extends State<MapPage> {
 
   late List<ParkingOption> parkingOptions = [
     ParkingOption(
-        startAddress: 'startAddress',
-        endAddress: 'endAddress',
-        timeText: 'timeText',
-        time: 1,
-        fareText: 'fareText',
-        fare: 1,
+        parkingAddress: '',
+        totalTimeText: '',
+        totalTime: 1,
+        totalFareText: '',
+        totalFare: 1,
         navRoutes: [
           NavRoute(mode: 'TRANSIT', latLongPairs: const [
             LatLng(37.7775, -122.416389),
@@ -40,7 +39,8 @@ class _MapPageState extends State<MapPage> {
   // late LatLng startPos = const LatLng(37.7775, -122.416389);
   late int parkingOptionIndex = 0;
 
-  late BitmapDescriptor startIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+  late BitmapDescriptor startIcon =
+      BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
   late BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
 
   void _onMapCreated(GoogleMapController controller) {
@@ -58,6 +58,7 @@ class _MapPageState extends State<MapPage> {
   // };
 
   bool isLoading = true;
+  late List<Widget> routeDescriptions = [];
 
   @override
   void initState() {
@@ -74,12 +75,18 @@ class _MapPageState extends State<MapPage> {
     List<ParkingOption> preRoutes = await getRoutes(
         widget.event.latitude, widget.event.longitude, widget.parkingRadius);
 
-    startIcon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48, 48)), 'assets/icons/home_pin.png');
-    endIcon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48, 48)), 'assets/icons/flag_circle.png');
+    startIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/icons/home_pin.png');
+    endIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/icons/flag_circle.png');
 
     setState(() {
       parkingOptions = preRoutes;
       parkingOptionIndex = 0;
+
+      routeDescriptions = _getRouteDescriptions();
 
       isLoading = false;
     });
@@ -135,8 +142,8 @@ class _MapPageState extends State<MapPage> {
     LatLng endPos = parkingOptions[parkingOptionIndex]
         .navRoutes[lastNavRouteI]
         .latLongPairs[lastLatPongPairsI];
-    Marker endMarker =
-        Marker(markerId: const MarkerId('endMarker'), position: endPos, icon: endIcon);
+    Marker endMarker = Marker(
+        markerId: const MarkerId('endMarker'), position: endPos, icon: endIcon);
 
     // example
     // Polyline driveline = const Polyline(
@@ -150,12 +157,15 @@ class _MapPageState extends State<MapPage> {
       body: SlidingUpPanel(
         panel: Column(
           children: [
-            const Icon(
-              Icons.expand_less,
-              size: 48.0,
+            const Divider(
+              height: 20,
+              thickness: 2,
+              indent: 100,
+              endIndent: 100,
+              color: Colors.black,
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 10.0),
               child: Text(
                 'Parking Options',
                 style: Styles().largeTextStyle,
@@ -164,7 +174,12 @@ class _MapPageState extends State<MapPage> {
             if (isLoading)
               const Center(child: CircularProgressIndicator())
             else
-              ..._getRouteDescriptions()
+              Expanded(
+                child: ListView.builder(
+                  itemCount: routeDescriptions.length,
+                  itemBuilder: (context, index) => routeDescriptions[index],
+                ),
+              )
           ],
         ),
         borderRadius: const BorderRadius.only(
@@ -228,22 +243,22 @@ class _MapPageState extends State<MapPage> {
                 child: Column(
                   children: [
                     Text(
-                      parkingOption.endAddress,
+                      parkingOption.parkingAddress,
                       style: Styles().mediumTextStyle,
                     ),
                     Row(
                       children: [
                         const Icon(Icons.attach_money),
                         Text(
-                          parkingOption.fareText
-                              .substring(1, parkingOption.fareText.length),
+                          parkingOption.totalFareText
+                              .substring(1, parkingOption.totalFareText.length),
                           style: Styles().defaultTextStyle,
                         ),
                         const Padding(
                             padding: EdgeInsets.only(left: 8.0),
                             child: Icon(Icons.timer_outlined)),
                         Text(
-                          parkingOption.timeText,
+                          parkingOption.totalTimeText,
                           style: Styles().defaultTextStyle,
                         )
                       ],
