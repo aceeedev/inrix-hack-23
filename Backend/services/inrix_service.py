@@ -29,7 +29,7 @@ class InrixServices:
         response = requests.get(url=url, headers=headers, params=payload)
         status_code = response.status_code
         if status_code != 200:
-            return "error in request"
+            return {"message": "error in request", "statusCode": status_code}
         
         data = response.json()["result"]
         return self._filter_parking(data)
