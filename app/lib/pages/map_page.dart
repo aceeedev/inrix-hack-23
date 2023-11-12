@@ -8,8 +8,9 @@ import 'package:app/models/parking_option.dart';
 import 'package:app/models/nav_route.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, required this.event});
+  const MapPage({super.key, required this.event, required this.parkingRadius});
   final Event event;
+  final int parkingRadius;
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -61,7 +62,7 @@ class _MapPageState extends State<MapPage> {
 
   Future asyncFunction() async {
     List<ParkingOption> preRoutes =
-        await getRoutes(widget.event.latitude, widget.event.longitude);
+        await getRoutes(widget.event.latitude, widget.event.longitude, widget.parkingRadius);
 
     setState(() {
       parkingOptions = preRoutes;

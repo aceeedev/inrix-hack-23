@@ -70,7 +70,10 @@ class _EventPageState extends State<EventPage> {
               padding: Styles().bottomButtonEdgeInset,
               child: GradientButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MapPage(event: widget.event))),
+                      builder: (context) => MapPage(
+                            event: widget.event,
+                            parkingRadius: _sliderValue.round(),
+                          ))),
                   child: Padding(
                     padding: Styles().largeButtonEdgeInset,
                     child: Text(
