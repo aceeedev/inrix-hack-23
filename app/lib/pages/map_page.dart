@@ -75,16 +75,10 @@ class _MapPageState extends State<MapPage> {
     });
 
     List<ParkingOption> preRoutes = await getRoutes(
-        widget.event.latitude, widget.event.longitude, widget.parkingRadius);
-
-    startIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(48, 48)),
-        'assets/icons/home_pin.png');
-    midIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(48, 48)), 'assets/icons/train.png');
-    endIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(48, 48)),
-        'assets/icons/flag_circle.png');
+        widget.event.latitude,
+        widget.event.longitude,
+        widget.parkingRadius,
+        widget.event.startDateText);
 
     setState(() {
       parkingOptions = preRoutes;
