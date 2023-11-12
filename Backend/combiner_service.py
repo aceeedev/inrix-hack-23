@@ -18,8 +18,7 @@ class CombinerService:
         
         for parking in parking_options: 
             parking_long, parking_lat = parking["cords"]
-            print("DEBUG: parking lat long ", parking_long, parking_lat)
-            # print("DEBUG: here")
+        
             route_option_to_concert = self._google_maps_service.run_get_route(parking_lat, parking_long, lat_dest, long_dest)
             route_option_to_parking = self._google_maps_service.run_get_route(lat_source, long_source, parking_lat, parking_long, mode="driving")
             route_option_to_parking["steps"] = route_option_to_parking["steps"][0]
@@ -28,6 +27,7 @@ class CombinerService:
                 "totalTimeText": self._format_time_text(route_option_to_concert["time"] + route_option_to_parking["time"]),
                 "routeToParking": route_option_to_parking,
                 "routeToEvent": route_option_to_concert,
+                "totalFare": self._format_total_fare(route_option_to_concert["fare"], route_option_to_parking["fare"])
             }
         
             route_options_to_concert.append(route_states)
@@ -54,8 +54,11 @@ class CombinerService:
             else:
                 res += " mins"
         return res
-
-        
+    
+    def _format_total_fare(self, fare1, fare2) -> int:
+        if not fare1: fare1 = 0
+        if not fare2: fare2 = 0
+        return fare1 + fare2
         
     
 # driver = CombinerService()
