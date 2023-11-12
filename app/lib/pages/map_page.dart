@@ -21,7 +21,6 @@ class _MapPageState extends State<MapPage> {
     mapController = controller;
   }
 
-  const driveColors = List
   var tempLinePoints = <LatLng>[];
 
   Polyline driveline = const Polyline(
@@ -38,7 +37,6 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
     return Scaffold(
       appBar: AppBar(
         title: const Text("Routing"),
@@ -53,24 +51,9 @@ class _MapPageState extends State<MapPage> {
             // the top
             MaterialPageRoute(
               builder: (context) => const SavedTicketsPage(),
-=======
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onPressed: () => Navigator.of(context).pop(
-              // the top
-              MaterialPageRoute(
-                builder: (context) => const SavedTicketsPage(),
-              ),
->>>>>>> Stashed changes
             ),
           ),
         ),
-<<<<<<< Updated upstream
       ),
       body: GoogleMap(
         onMapCreated: _onMapCreated,
@@ -81,20 +64,6 @@ class _MapPageState extends State<MapPage> {
         initialCameraPosition: CameraPosition(
           target: _center,
           zoom: 11.0,
-=======
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          // cloudMapId: '40bae229feee19e5', // javascript vector
-          // cloudMapId: '5b05b9f927bfcf34',  // javascript raster
-          cloudMapId: '701a336f83a1aaa6', // static raster
-          // cloudMapId: '74194f22342551fa',  // android
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
-          ),
-          myLocationButtonEnabled: false,
-          polylines: <Polyline>{driveline},
->>>>>>> Stashed changes
         ),
         myLocationButtonEnabled: false,
       ),
