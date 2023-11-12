@@ -1,2 +1,0 @@
-class GoogleMapsService:
-    pass

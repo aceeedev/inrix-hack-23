@@ -39,7 +39,7 @@ class _SavedTicketsPageState extends State<SavedTicketsPage> {
             }
           }
 
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       )),
       bottomNavigationBar: const BottomNavBar(
