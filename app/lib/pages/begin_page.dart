@@ -2,6 +2,7 @@ import 'package:app/pages/find_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/styles.dart';
 import 'package:app/widgets/gradient_button_widget.dart';
+import 'package:app/widgets/roads_gradient_widget.dart';
 
 class BeginPage extends StatelessWidget {
   const BeginPage({super.key});
@@ -13,20 +14,7 @@ class BeginPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ShaderMask(
-            shaderCallback: (rect) {
-              return const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.black, Colors.transparent],
-              ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
-            },
-            blendMode: BlendMode.dstIn,
-            child: Image.asset(
-              'assets/images/roads.png',
-              fit: BoxFit.fitWidth,
-            ),
-          ),
+          const RoadsGradient(),
           Text(
             'Drive, Park, and Ride',
             style: Styles().largeTextStyle,
@@ -41,7 +29,7 @@ class BeginPage extends StatelessWidget {
           ),
           const Spacer(),
           Padding(
-            padding: const EdgeInsets.only(bottom: 50.0),
+            padding: Styles().bottomButtonEdgeInset,
             child: GradientButton(
                 onPressed: () => Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
@@ -49,7 +37,7 @@ class BeginPage extends StatelessWidget {
                       ),
                     ),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14.0, 5.0, 14.0, 5.0),
+                  padding: Styles().largeButtonEdgeInset,
                   child: Text(
                     'Start riding and gliding',
                     style:
