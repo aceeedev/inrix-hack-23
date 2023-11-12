@@ -60,7 +60,7 @@ class _EventPageState extends State<EventPage> {
               child: Slider(
                 value: _sliderValue,
                 max: 2500,
-                min: 805, // ~half a mile in meters
+                min: 200, // ~0.1 a mile in meters
                 divisions: 100,
                 onChanged: (double value) =>
                     setState(() => _sliderValue = value),

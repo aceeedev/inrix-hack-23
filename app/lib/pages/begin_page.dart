@@ -20,7 +20,7 @@ class BeginPage extends StatelessWidget {
             style: Styles().largeTextStyle,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(12.0, 30.0, 12.0, 12.0),
             child: Text(
               'Seamless parking, stress-free transit, and immersion in the concert experience.',
               textAlign: TextAlign.center,

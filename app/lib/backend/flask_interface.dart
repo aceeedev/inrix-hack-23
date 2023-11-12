@@ -56,13 +56,10 @@ Future<List<ParkingOption>> getRoutes(
       List<LatLng> latLongPairs = [];
 
       // to parking
-      for (List<dynamic> pathPair in option['routeToParking']['steps']
-          ['path']) {
+      for (List<dynamic> pathPair in option['routeToParking']['steps']) {
         latLongPairs.add(LatLng(pathPair[0], pathPair[1]));
       }
-      navRoutes.add(NavRoute(
-          mode: option['routeToParking']['steps']['mode'],
-          latLongPairs: latLongPairs));
+      navRoutes.add(NavRoute(mode: 'DRIVING', latLongPairs: latLongPairs));
 
       // to event
       for (Map<String, dynamic> step in option['routeToEvent']['steps']) {
