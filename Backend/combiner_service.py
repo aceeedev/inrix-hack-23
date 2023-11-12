@@ -21,7 +21,7 @@ class CombinerService:
         
             route_option_to_concert = self._google_maps_service.run_get_route(parking_lat, parking_long, lat_dest, long_dest)
             route_option_to_parking = self._google_maps_service.run_get_route(lat_source, long_source, parking_lat, parking_long, mode="driving")
-            route_option_to_parking["steps"] = route_option_to_parking["steps"][0]
+            route_option_to_parking["steps"] = self._flatten_nested_cords(route_option_to_parking["steps"])
             route_states = {
                 "totalTime": route_option_to_concert["time"] + route_option_to_parking["time"],
                 "totalTimeText": self._format_time_text(route_option_to_concert["time"] + route_option_to_parking["time"]),
@@ -59,6 +59,12 @@ class CombinerService:
         if not fare1: fare1 = 0
         if not fare2: fare2 = 0
         return fare1 + fare2
+    
+    def _flatten_nested_cords(self, steps) -> list:
+        res = []
+        for step in steps:
+            res.extend(step["path"])
+        return res
         
     
 # driver = CombinerService()
