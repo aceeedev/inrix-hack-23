@@ -12,6 +12,7 @@ class TicketMasterServices:
 
         for i in response['_embedded']['events']:
             eventname = i['name']
+            eventURL = i['url']
             # added coordinates to the dictionary
             lat = i['_embedded']['venues'][0]['location']['latitude']
             long = i['_embedded']['venues'][0]['location']['longitude']
@@ -19,13 +20,19 @@ class TicketMasterServices:
             address = i['_embedded']['venues'][0]['address']['line1']
             city = i['_embedded']['venues'][0]['city']['name']
             state = i['_embedded']['venues'][0]['state']['stateCode']
-            location = ""
             location = address + ", " + city + ", " + state
             # imagelist is a list of the images 
-            imagelist = []
+            imagelist = ""
             for j in i['images']:
-                imagelist.append(j['url'])
-            eventList.append({'name': eventname, 'lat': lat, 'long': long, 'location': location, 'imagelist': imagelist})
+                # try to add the first image with a 4:3 aspect ratio
+                # if we can't find it just add the first image
+                try:
+                    if j['ratio'] != "" and j['ratio'] == '4_3':
+                        imagelist = (j['url'])
+                except:
+                    imagelist = (j['url'])
         
-        return eventList
+            eventList.append({'name': eventname, 'lat': lat, 'long': long, 'location': location,'eventURL': eventURL, 'imagelist': imagelist})
+            return eventList
+        pprint(eventList)
 TicketMasterServices.run_get_tickets()
