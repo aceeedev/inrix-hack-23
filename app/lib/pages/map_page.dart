@@ -61,14 +61,6 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
 
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/home_pin.png')
-        .then((onValue) {
-      startIcon = onValue;
-    });
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/flag_circle.png')
-        .then((onValue) {
-      endIcon = onValue;
-    });
     asyncFunction();
   }
 
@@ -76,46 +68,15 @@ class _MapPageState extends State<MapPage> {
     List<ParkingOption> preRoutes = await getRoutes(
         widget.event.latitude, widget.event.longitude, widget.parkingRadius);
 
+    startIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'assets/home_pin.png');
+    startIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'assets/flag_circle.png');
+
     setState(() {
       parkingOptions = preRoutes;
       parkingOptionIndex = 0;
     });
-  }
-
-  Future<Map<String, dynamic>> getFutures() async {
-    // List<Event> foodEvents =
-    //     await findEvents(lat, long, 'homeless soup kitchen');
-    // List<Event> shelterEvents = await findEvents(lat, long, 'homeless shelter');
-    BitmapDescriptor genericMarker = await iconDataToBitmap(Icons.person);
-
-    // await DB.instance.saveAllEvents([...foodEvents, ...shelterEvents]);
-
-    return {'genericMarker': genericMarker};
-  }
-
-  Future<BitmapDescriptor> iconDataToBitmap(IconData iconData) async {
-    final pictureRecorder = PictureRecorder();
-    final canvas = Canvas(pictureRecorder);
-
-    final textPainter = TextPainter(textDirection: TextDirection.ltr);
-    final iconStr = String.fromCharCode(iconData.codePoint);
-
-    textPainter.text = TextSpan(
-        text: iconStr,
-        style: TextStyle(
-          letterSpacing: 0.0,
-          fontSize: 96.0,
-          fontFamily: iconData.fontFamily,
-          color: Colors.red,
-        ));
-    textPainter.layout();
-    textPainter.paint(canvas, const Offset(0.0, 0.0));
-
-    final picture = pictureRecorder.endRecording();
-    final image = await picture.toImage(96, 96);
-    final bytes = await image.toByteData(format: ImageByteFormat.png);
-
-    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
   }
 
   @override
@@ -145,8 +106,8 @@ class _MapPageState extends State<MapPage> {
           color:
               parkingOptions[parkingOptionIndex].navRoutes[routeIndex].mode ==
                       "TRANSIT"
-                  ? Colors.orange
-                  : Colors.green));
+                  ? Colors.purple
+                  : Colors.pinkAccent));
     }
 
     // get the starting coordinate
