@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:app/models/event.dart';
 
-String apiUrl = 'http://10.0.2.2:5000';
+String apiUrl = 'http://172.31.151.109:5000';
 
 Future<List<Event>> findEvents() async {
   String endpoint = '/tickets';
