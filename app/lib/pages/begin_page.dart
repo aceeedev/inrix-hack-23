@@ -48,9 +48,13 @@ class BeginPage extends StatelessWidget {
                         builder: (context) => const FindPage(),
                       ),
                     ),
-                child: Text(
-                  'Start riding and gliding',
-                  style: Styles().mediumTextStyle.copyWith(color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(14.0, 5.0, 14.0, 5.0),
+                  child: Text(
+                    'Start riding and gliding',
+                    style:
+                        Styles().mediumTextStyle.copyWith(color: Colors.white),
+                  ),
                 )),
           )
         ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Styles {
   // Constants:
-  static const String _fontFamily = 'JetBrains Mono';
+  static const String _fontFamily = 'Lexend';
 
   // Colors:
   static const Color _mainColor = Color(0xFF211950);
@@ -24,7 +24,7 @@ class Styles {
       color: Colors.black,
       fontFamily: _fontFamily,
       fontSize: 24.0,
-      fontWeight: FontWeight.w900);
+      fontWeight: FontWeight.w700);
 
   TextStyle get defaultTextStyle => _defaultTextStyle;
   TextStyle get mediumTextStyle => _mediumTextStyle;
