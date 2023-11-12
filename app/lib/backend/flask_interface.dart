@@ -8,22 +8,22 @@ Future<List<Event>> findEvents() async {
   // Dummy data
   List<Event> events = [
     Event(
-        name: "yourmomshouse",
-        address: "111 El Camino",
+        name: "yourdadshouse",
+        address: "111 El Camimo",
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
         imageUrl: ""),
     Event(
         name: "yourmomshouse",
-        address: "111 El Camino",
+        address: "11 El Camino",
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
         imageUrl: ""),
     Event(
-        name: "yourmomshouse",
-        address: "111 El Camino",
+        name: "mymomshouse",
+        address: "121 El Camino",
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
