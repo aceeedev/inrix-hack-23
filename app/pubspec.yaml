@@ -41,6 +41,7 @@ dependencies:
   http: ^1.1.0
   intl: ^0.18.1
   hive_generator: ^2.0.1
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
