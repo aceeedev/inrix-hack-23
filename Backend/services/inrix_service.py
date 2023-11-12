@@ -1,8 +1,8 @@
 import requests
 from pprint import pprint
 import json
-from credentials_service import CredentialsService
-from off_street_parking import OffStreetParking
+from services.credentials_service import CredentialsService
+from services.off_street_parking import OffStreetParking
 
 class InrixServices:
     def __init__(self) -> None:
