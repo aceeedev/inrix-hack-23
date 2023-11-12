@@ -21,6 +21,21 @@ class _MapPageState extends State<MapPage> {
     mapController = controller;
   }
 
+  var tempLinePoints = <LatLng>[];
+
+  Polyline driveline = const Polyline(
+    polylineId: PolylineId("driveline"),
+    color: Colors.blue,
+    points: <LatLng>[
+      LatLng(37.791948, -122.409969),
+      LatLng(37.797891, -122.406749),
+      LatLng(37.805438, -122.415288)
+    ], // replace with temp points
+    endCap: Cap.roundCap,
+  );
+  Polyline transitline = const Polyline(polylineId: PolylineId("transitline"));
+  Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +62,7 @@ class _MapPageState extends State<MapPage> {
         // cloudMapId: '5b05b9f927bfcf34',  // javascript raster
         cloudMapId: '701a336f83a1aaa6', // static raster
         // cloudMapId: '74194f22342551fa',  // android
+        polylines: <Polyline>{driveline},
         initialCameraPosition: CameraPosition(
           target: _center,
           zoom: 11.0,

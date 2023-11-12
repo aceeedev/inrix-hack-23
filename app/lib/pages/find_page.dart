@@ -26,11 +26,6 @@ class _FindPageState extends State<FindPage> {
             } else if (snapshot.hasData) {
               List<Event> foundEvents = snapshot.data!;
 
-              if (foundEvents.isEmpty) {
-                return const Center(
-                    child: Text('You haven\'t saved any events yet D:'));
-              }
-
               return TicketsList(
                 events: foundEvents,
                 findPage: true,

@@ -27,6 +27,11 @@ class _SavedTicketsPageState extends State<SavedTicketsPage> {
             } else if (snapshot.hasData) {
               List<Event> savedEvents = snapshot.data!;
 
+              if (savedEvents.isEmpty) {
+                return const Center(
+                    child: Text('You haven\'t saved any events yet D:'));
+              }
+
               return TicketsList(
                 events: savedEvents,
                 findPage: false,
