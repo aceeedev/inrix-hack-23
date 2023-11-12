@@ -55,12 +55,15 @@ class _MapPageState extends State<MapPage> {
               ];
 
               Set<Polyline> polyset = {};
-              for (int loop = 0; loop <= 0; loop++) {
+              var index = 0;
+              print(routes[20]);
+              while (routes[index] != null) {
                 polyset.add(Polyline(
-                    polylineId: PolylineId(routes[loop].name),
-                    points: routes[loop].latLongPairs,
-                    color: lineColors[loop]));
+                    polylineId: PolylineId(routes[index].name),
+                    points: routes[index].latLongPairs,
+                    color: lineColors[index]));
               }
+              for (int loop = 0; loop <= 0; loop++) {}
 
               // example
               // Polyline driveline = const Polyline(

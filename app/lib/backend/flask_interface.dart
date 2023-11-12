@@ -331,7 +331,7 @@ Future<List<NavRoute>> getRoutes() async {
     (37.80244, -122.40571)
   ].map((e) => LatLng(e.$1, e.$2)).toList();
 
-  return [NavRoute(name: 'name', latLongPairs: dummyData)];
+  // return [NavRoute(name: 'name', latLongPairs: dummyData)];
 
   String endpoint = '/';
   var response = await http.Client().get(Uri.parse('$apiUrl$endpoint'));
