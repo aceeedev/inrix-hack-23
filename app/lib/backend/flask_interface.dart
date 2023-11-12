@@ -331,7 +331,7 @@ Future<List<LatLng>> getRoutes() async {
     (37.80244, -122.40571)
   ].map((e) => LatLng(e.$1, e.$2)).toList();
 
-  // return dummyData;
+  return dummyData;
 
   String endpoint = '/';
   var response = await http.Client().get(Uri.parse('$apiUrl$endpoint'));
@@ -339,12 +339,14 @@ Future<List<LatLng>> getRoutes() async {
   if (response.statusCode == 200) {
     List<dynamic> json = jsonDecode(response.body);
 
-    List<Route> routes = json
-        .map((e) => Route(
+    List<NavRoute> routes = json
+        .map((e) => NavRoute(
             name: e['name'],
             latLongPairs:
-                (e['points'] as List<dynamic>).map((e) => e.latLng).toList<LatLng>()))
+                e['points'].map((e) => LatLng(e[0], e[1])).toList<LatLng>()))
         .toList();
+
+    //return routes;
   } else {
     throw Exception('Error, code ${response.statusCode}');
   }
