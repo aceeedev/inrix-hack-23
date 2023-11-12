@@ -3,13 +3,12 @@ import 'package:app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:http/retry.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
 
   final String title;
-
+  
   @override
   State<MapPage> createState() => _MapPageState();
 }
@@ -28,16 +27,13 @@ class _MapPageState extends State<MapPage> {
   Polyline driveline = const Polyline(
     polylineId: PolylineId("driveline"),
     color: Colors.blue,
-    points: <LatLng>[
-      LatLng(37.791948, -122.409969),
-      LatLng(37.797891, -122.406749),
-      LatLng(37.805438, -122.415288)
-    ], // replace with temp points
+    points: <LatLng>[LatLng(37.7792079, -122.3900709), LatLng(37.7788438, -122.3905768), LatLng(37.779421, -122.390129), LatLng(37.7753048, -122.4189009), LatLng(37.7751531, -122.419041)] , // replace with temp points
     endCap: Cap.roundCap,
   );
   Polyline transitline =
       const Polyline(polylineId: PolylineId("awqeF|h_jVv@dATXCDMN"));
   Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
+  var parkSpots = <Marker>{const Marker(markerId: MarkerId('spot1'), position: LatLng(37.797891, -122.406749), )};
 
   @override
   Widget build(BuildContext context) {
