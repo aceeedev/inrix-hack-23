@@ -3,6 +3,7 @@ import 'package:app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:app/pages/begin_page.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
@@ -73,9 +74,7 @@ class _MapPageState extends State<MapPage> {
             child: Align(
               alignment: Alignment.topLeft,
               child: TextButton(
-                onPressed: () => Navigator.of(context).pop(MaterialPageRoute(
-                  builder: (context) => const SavedTicketsPage(),
-                )),
+                onPressed: () => Navigator.of(context).pop(),
                 style: const ButtonStyle(splashFactory: NoSplash.splashFactory),
                 child: const Icon(Icons.arrow_back_ios_new),
               ),
