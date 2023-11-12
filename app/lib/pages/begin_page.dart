@@ -16,7 +16,7 @@ class BeginPage extends StatelessWidget {
         children: [
           const RoadsGradient(),
           Text(
-            'Drive, Park, and Ride',
+            'Park, Bus, & Jam',
             style: Styles().largeTextStyle,
           ),
           Padding(
@@ -31,19 +31,16 @@ class BeginPage extends StatelessWidget {
           Padding(
             padding: Styles().bottomButtonEdgeInset,
             child: GradientButton(
-                onPressed: () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const FindPage(),
-                      ),
-                    ),
-                child: Padding(
-                  padding: Styles().largeButtonEdgeInset,
-                  child: Text(
-                    'Start riding and gliding',
-                    style:
-                        Styles().mediumTextStyle.copyWith(color: Colors.white),
-                  ),
-                )),
+              onPressed: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const FindPage(),
+                ),
+              ),
+              child: Text(
+                'Begin',
+                style: Styles().mediumTextStyle.copyWith(color: Colors.white),
+              ),
+            ),
           )
         ],
       ),
