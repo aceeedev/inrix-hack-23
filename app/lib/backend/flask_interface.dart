@@ -13,26 +13,32 @@ Future<List<Event>> findEvents() async {
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: ""),
+        imageUrl: "",
+        latitude: 0,
+        longitude: 0),
     Event(
         name: "yourmomshouse",
         address: "11 El Camino",
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: ""),
+        imageUrl: "",
+        latitude: 0,
+        longitude: 0),
     Event(
         name: "mymomshouse",
         address: "121 El Camino",
         date: DateTime(1),
         url:
             "https://docs.google.com/document/d/1lwh_GXFqQ8O2bEwrHyw_koGDYNGQE4NGFVCEsYzbarU/edit#heading=h.1ak8pstirwpq",
-        imageUrl: ""),
+        imageUrl: "",
+        latitude: 0,
+        longitude: 0),
   ];
   return events;
 
   // actual code
-  String endpoint = '/';
+  String endpoint = '/tickets';
   var response = await http.Client().get(Uri.parse('$apiUrl$endpoint'));
 
   if (response.statusCode == 200) {
@@ -40,11 +46,14 @@ Future<List<Event>> findEvents() async {
 
     List<Event> events = json
         .map((e) => Event(
-            name: 'name',
-            address: 'address',
-            date: DateTime.now(),
-            url: 'url',
-            imageUrl: 'imageUrl'))
+              name: e['name'],
+              address: e['location'],
+              date: DateTime.now(),
+              url: 'url',
+              imageUrl: e['imagelist'][0],
+              latitude: e['lat'],
+              longitude: e['long'],
+            ))
         .toList();
 
     return events;

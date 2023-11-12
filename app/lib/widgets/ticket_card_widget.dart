@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:app/backend/db_manager.dart';
 import 'package:app/pages/event_page.dart';
 import 'package:app/models/event.dart';
 

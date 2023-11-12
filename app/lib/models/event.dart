@@ -14,11 +14,18 @@ class Event extends HiveObject {
   final String url;
   @HiveField(4)
   final String imageUrl;
+  @HiveField(5)
+  final double latitude;
+  @HiveField(6)
+  final double longitude;
 
-  Event(
-      {required this.name,
-      required this.address,
-      required this.date,
-      required this.url,
-      required this.imageUrl});
+  Event({
+    required this.name,
+    required this.address,
+    required this.date,
+    required this.url,
+    required this.imageUrl,
+    required this.latitude,
+    required this.longitude,
+  });
 }
