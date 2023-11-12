@@ -22,10 +22,13 @@ class CombinerService:
             route_option_to_concert = self._google_maps_service.run_get_route(parking_lat, parking_long, lat_dest, long_dest)
             route_option_to_parking = self._google_maps_service.run_get_route(lat_source, long_source, parking_lat, parking_long, mode="driving")
             route_option_to_parking["steps"] = self._flatten_nested_cords(route_option_to_parking["steps"])
+            cost = parking["cost"]
+            
             route_states = {
                 "totalTime": route_option_to_concert["time"] + route_option_to_parking["time"],
                 "totalTimeText": self._format_time_text(route_option_to_concert["time"] + route_option_to_parking["time"]),
-                "parkingCost": parking["cost"],
+                "parkingCost": cost,
+                "totalFareText": str(cost),
                 "routeToParking": route_option_to_parking,
                 "routeToEvent": route_option_to_concert,
                 "totalFare": self._format_total_fare(route_option_to_concert["fare"], route_option_to_parking["fare"])
