@@ -9,7 +9,7 @@ class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
 
   final String title;
-  
+
   @override
   State<MapPage> createState() => _MapPageState();
 }
@@ -23,18 +23,34 @@ class _MapPageState extends State<MapPage> {
     mapController = controller;
   }
 
-  var tempLinePoints = <LatLng>[];
-
   Polyline driveline = const Polyline(
     polylineId: PolylineId("driveline"),
     color: Colors.blue,
-    points: <LatLng>[LatLng(37.7792079, -122.3900709), LatLng(37.7788438, -122.3905768), LatLng(37.779421, -122.390129), LatLng(37.7753048, -122.4189009), LatLng(37.7751531, -122.419041)] , // replace with temp points
+    points: <LatLng>[
+      LatLng(37.7792079, -122.3900709),
+      LatLng(37.77806169999999, -122.3915693),
+      LatLng(37.78166050000001, -122.3961541),
+      LatLng(37.7993974, -122.4087114),
+      LatLng(37.79948880000001, -122.4087865),
+      LatLng(37.7997396, -122.4066119),
+      LatLng(37.80161289999999, -122.4069633),
+      LatLng(37.80185669999999, -122.4056576),
+      LatLng(37.8020986, -122.4059576),
+      LatLng(37.8021366, -122.4058373),
+      LatLng(37.8022515, -122.405858),
+      LatLng(37.8022916, -122.4056988)
+    ], // replace with temp points
     endCap: Cap.roundCap,
   );
   // Polyline transitline =
   //     const Polyline(polylineId: PolylineId("awqeF|h_jVv@dATXCDMN"));
   // Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
-  var parkSpots = <Marker>{const Marker(markerId: MarkerId('spot1'), position: LatLng(37.797891, -122.406749), )};
+  var parkSpots = <Marker>{
+    const Marker(
+      markerId: MarkerId('spot1'),
+      position: LatLng(37.797891, -122.406749),
+    )
+  };
 
   @override
   Widget build(BuildContext context) {
