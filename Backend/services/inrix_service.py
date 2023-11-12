@@ -9,10 +9,8 @@ class InrixServices:
     def __init__(self) -> None:
         self._credential_services = CredentialsService()
         
-    def run_get_parking(self, lat: float, long: float, radius: float, start_time="2023-11-12T12:00"): 
+    def run_get_parking(self, lat: float, long: float, radius: float, start_time="2023-11-12T13:00"): 
         res = self._query_parking(lat, long, radius, start_time)
-        # pprint(res)
-        # print(len(res))
         return res
     
     def _query_parking(self, lat: str, long: str, radius: float, start_time = None) -> json:
@@ -24,7 +22,6 @@ class InrixServices:
             'accept': "application/json"
         }
         
-
         payload = {
             'point': str(lat) + "|" + str(long),
             'radius': int(radius),
