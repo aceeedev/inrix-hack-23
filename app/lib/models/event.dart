@@ -18,6 +18,8 @@ class Event extends HiveObject {
   final double latitude;
   @HiveField(6)
   final double longitude;
+  @HiveField(7)
+  final String startDateText;
 
   Event({
     required this.name,
@@ -27,5 +29,6 @@ class Event extends HiveObject {
     required this.imageUrl,
     required this.latitude,
     required this.longitude,
+    required this.startDateText,
   });
 }

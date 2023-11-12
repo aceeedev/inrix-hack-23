@@ -25,6 +25,7 @@ Future<List<Event>> findEvents() async {
               imageUrl: e['imagelist'],
               latitude: double.parse(e['lat']),
               longitude: double.parse(e['long']),
+              startDateText: e['eventTimeUTC'],
             ))
         .toList();
 
@@ -36,8 +37,8 @@ Future<List<Event>> findEvents() async {
 
 /// Returns a [List] of parking options where each option is a [List] of the
 /// [NavRoute] for that option
-Future<List<ParkingOption>> getRoutes(
-    double eventLat, double eventLong, int parkingRadius) async {
+Future<List<ParkingOption>> getRoutes(double eventLat, double eventLong,
+    int parkingRadius, String startDate) async {
   // get user's position
   Position userPosition = await getUserPosition();
   double userLat = userPosition.latitude;
@@ -45,7 +46,7 @@ Future<List<ParkingOption>> getRoutes(
 
   String endpoint = '/parking-options';
   var response = await http.Client().get(Uri.parse(
-      '$apiUrl$endpoint?latDest=$eventLat&longDest=$eventLong&latSource=$userLat&longSource=$userLong&radius=$parkingRadius'));
+      '$apiUrl$endpoint?latDest=$eventLat&longDest=$eventLong&latSource=$userLat&longSource=$userLong&radius=$parkingRadius&startTime=$startDate'));
 
   if (response.statusCode == 200) {
     List<dynamic> json = jsonDecode(response.body);
