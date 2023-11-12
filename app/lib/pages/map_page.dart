@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:app/pages/begin_page.dart';
 import 'package:app/backend/flask_interface.dart';
+import 'package:app/models/route.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
@@ -43,7 +44,17 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SlidingUpPanel(
+        body: FutureBuilder(
+        future: findEvents(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(
+                  child: Text('An error has occurred, ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              List<NavRoute> route = snapshot.data!;
+
+              return SlidingUpPanel(
       panel: Column(
         children: [
           Padding(
@@ -86,6 +97,13 @@ class _MapPageState extends State<MapPage> {
           ),
         ],
       ),
-    ));
+    )
+            }
+          }
+
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
+      );
   }
 }
