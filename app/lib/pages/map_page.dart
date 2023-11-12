@@ -40,7 +40,7 @@ class _MapPageState extends State<MapPage> {
   // late LatLng startPos = const LatLng(37.7775, -122.416389);
   late int parkingOptionIndex = 0;
 
-  late BitmapDescriptor startIcon = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor startIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
   late BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
 
   void _onMapCreated(GoogleMapController controller) {
@@ -74,10 +74,8 @@ class _MapPageState extends State<MapPage> {
     List<ParkingOption> preRoutes = await getRoutes(
         widget.event.latitude, widget.event.longitude, widget.parkingRadius);
 
-    startIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/home_pin.png');
-    startIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/flag_circle.png');
+    startIcon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48, 48)), 'assets/icons/home_pin.png');
+    endIcon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48, 48)), 'assets/icons/flag_circle.png');
 
     setState(() {
       parkingOptions = preRoutes;
@@ -138,7 +136,7 @@ class _MapPageState extends State<MapPage> {
         .navRoutes[lastNavRouteI]
         .latLongPairs[lastLatPongPairsI];
     Marker endMarker =
-        Marker(markerId: const MarkerId('endMarker'), position: endPos);
+        Marker(markerId: const MarkerId('endMarker'), position: endPos, icon: endIcon);
 
     // example
     // Polyline driveline = const Polyline(

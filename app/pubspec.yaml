@@ -86,6 +86,9 @@ flutter:
      - assets/icons/flag_circle.svg
      - assets/icons/flag.svg
      - assets/icons/home_pin.svg
+     - assets/icons/flag_circle.png
+     - assets/icons/flag.png
+     - assets/icons/home_pin.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
