@@ -13,6 +13,7 @@ class TicketCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const IconData calendar = IconData(0xe122, fontFamily: 'MaterialIcons');
+    const IconData info = IconData(0xe33d, fontFamily: 'MaterialIcons');
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
@@ -51,10 +52,7 @@ class TicketCard extends StatelessWidget {
                           padding: EdgeInsets.only(right: 8.0),
                           child: Icon(calendar),
                         ),
-                        Text(
-                          DateFormat.yMMMEd().format(event.date),
-                          style: Styles().defaultTextStyle,
-                        )
+                        Text(DateFormat.yMMMEd().format(event.date))
                       ]),
                 ),
                 const Spacer(flex: 2),

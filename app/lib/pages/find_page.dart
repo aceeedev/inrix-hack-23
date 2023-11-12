@@ -22,10 +22,7 @@ class _FindPageState extends State<FindPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Center(
-                  child: Text(
-                'An error has occurred, ${snapshot.error}',
-                style: Styles().defaultTextStyle,
-              ));
+                  child: Text('An error has occurred, ${snapshot.error}'));
             } else if (snapshot.hasData) {
               List<Event> foundEvents = snapshot.data!;
 
