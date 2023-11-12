@@ -21,9 +21,9 @@ class InrixServices:
         
         payload = {
             'point': str(lat) + "|" + str(long),
-            'radius': str(radius),
+            'radius': int(radius),
             'locale': 'en-US',
-            'limit': str(50),
+            'limit': 50,
         }
 
         response = requests.get(url=url, headers=headers, params=payload)
