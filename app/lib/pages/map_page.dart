@@ -2,7 +2,6 @@ import 'package:app/pages/saved_tickets_page.dart';
 import 'package:app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/retry.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
@@ -37,6 +36,7 @@ class _MapPageState extends State<MapPage> {
   Polyline transitline =
       const Polyline(polylineId: PolylineId("awqeF|h_jVv@dATXCDMN"));
   Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
+  var parkSpots = <Marker>{ Marker(markerId: MarkerId('spot1'), position: LatLng(37.797891, -122.406749), onTap: () => )};
 
   @override
   Widget build(BuildContext context) {
