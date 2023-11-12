@@ -7,13 +7,13 @@ from credentials_service import CredentialsService
 
 class GoogleMapsService:
 
-    def run_get_transit_route(lat1, long1, lat2, long2, departure_time=None): 
+    def run_get_route(lat1, long1, lat2, long2, mode="transit", departure_time=None): 
         url = 'https://maps.googleapis.com/maps/api/directions/json'
 
         payload = {'key': CredentialsService().GOOGLE_API_KEY,
                    'origin': str(lat1) + " ," + str(long1),
                    'destination': str(lat2) + " ," + str(long2),
-                   'mode': "transit",
+                   'mode': mode,
                    }
 
         response = requests.get(url=url, params=payload)
