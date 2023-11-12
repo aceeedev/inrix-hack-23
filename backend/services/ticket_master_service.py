@@ -33,6 +33,6 @@ class TicketMasterServices:
                     imagelist = (j['url'])
         
             eventList.append({'name': eventname, 'lat': lat, 'long': long, 'location': location,'eventURL': eventURL, 'imagelist': imagelist})
-            return eventList
         pprint(eventList)
+        return eventList
 TicketMasterServices.run_get_tickets()
