@@ -37,7 +37,8 @@ class _MapPageState extends State<MapPage> {
         ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
-          cloudMapId: '40bae229feee19e5',
+          // cloudMapId: '40bae229feee19e5',  // javascript vector
+          cloudMapId: '701a336f83a1aaa6',  // static rastor
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,

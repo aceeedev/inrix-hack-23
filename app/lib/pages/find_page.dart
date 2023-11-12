@@ -29,7 +29,10 @@ class _FindPageState extends State<FindPage> {
             } else if (snapshot.hasData) {
               List<Event> foundEvents = snapshot.data!;
 
-              return TicketsList(events: foundEvents);
+              return TicketsList(
+                events: foundEvents,
+                findPage: true,
+              );
             }
           }
 
