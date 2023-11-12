@@ -53,8 +53,13 @@ class BottomNavBar extends StatelessWidget {
 
     // send user to new page
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => pages[newIndex],
+      // MaterialPageRoute(
+      //   builder: (context) => pages[newIndex],
+      // ),
+      PageRouteBuilder(
+        pageBuilder: (context, animation1, animation2) => pages[newIndex],
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
       ),
     );
   }
