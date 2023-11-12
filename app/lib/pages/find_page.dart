@@ -33,7 +33,7 @@ class _FindPageState extends State<FindPage> {
             }
           }
 
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       ),
       bottomNavigationBar: const BottomNavBar(
