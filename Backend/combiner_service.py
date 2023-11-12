@@ -9,8 +9,8 @@ class CombinerService:
         self._inrix_service = InrixServices()
         self._google_maps_service = GoogleMapsService()
         
-    def get_all_parking_options(self, lat_source, long_source, lat_dest, long_dest, radius) -> list[any]:
-        parking_options = self._inrix_service.run_get_parking(lat_dest, long_dest, radius)
+    def get_all_parking_options(self, lat_source, long_source, lat_dest, long_dest, radius, start_time) -> list[any]:
+        parking_options = self._inrix_service.run_get_parking(lat_dest, long_dest, radius, start_time)
 
         route_options_to_concert = []
 
@@ -25,6 +25,7 @@ class CombinerService:
             route_states = {
                 "totalTime": route_option_to_concert["time"] + route_option_to_parking["time"],
                 "totalTimeText": self._format_time_text(route_option_to_concert["time"] + route_option_to_parking["time"]),
+                "parkingCost": parking["cost"],
                 "routeToParking": route_option_to_parking,
                 "routeToEvent": route_option_to_concert,
                 "totalFare": self._format_total_fare(route_option_to_concert["fare"], route_option_to_parking["fare"])
@@ -33,6 +34,7 @@ class CombinerService:
             route_options_to_concert.append(route_states)
         
         return heapq.nsmallest(n=(min(5, len(route_options_to_concert))), iterable=route_options_to_concert, key=lambda x: int(x["routeToEvent"]["time"]))
+        # return heapq.nsmallest(n=(min(5, len(route_options_to_concert))), iterable=route_options_to_concert, key=lambda x: ((int(x["routeToEvent"]["time"])/60)**2)  + (int(x["parkingCost"])**2))
         
     def _format_time_text(self, seconds: int) -> str: 
         res = "" 
@@ -68,5 +70,5 @@ class CombinerService:
         
     
 # driver = CombinerService()
-# res = driver.get_all_parking_options(100, 100, 37.8024, -122.4058, 500)
-# print(res)
+# res = driver.get_all_parking_options(37.349005996578114, -121.936651011974, 37.8024, -122.4058, 2500, "2023-11-12T00:00")
+# pprint(res)
