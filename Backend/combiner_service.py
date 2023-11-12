@@ -13,12 +13,10 @@ class CombinerService:
         route_options = []
         for parking in parking_options: 
             parking_long, parking_lat = parking["cords"]
-            route_option = self._google_maps_service.run_get_transit_route(parking_lat, parking_lat, lat_dest, long_dest)
+            route_option = self._google_maps_service.run_get_route(parking_lat, parking_lat, lat_dest, long_dest)
             route_options.append(route_options)
         return route_options
     
     
 driver = CombinerService()
-res = driver.get_all_parking_options(100, 100, 37.74638779388551, -122.42209196090698)
-
-            
+res = driver.get_all_parking_options(100, 100, 37.8024, -122.4058, 1500)

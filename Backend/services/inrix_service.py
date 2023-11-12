@@ -43,12 +43,47 @@ class InrixServices:
         return [self._extract_parking_data(result) for result in results if self._good_parking(result, start_time, end_time)]
     
     def _extract_parking_data(self, result) -> OffStreetParking:
+        try: 
+            id = result["id"]
+        except: 
+            id = None
+        
+        try: 
+            name = result["name"]
+        except: 
+            name = None
+        
+        try: 
+            hrs = result["hrs"]
+        except: 
+            hrs = None
+            
+        try: 
+            cords = result["point"]["coordinates"]
+        except:
+            cords = None
+        
+        try: 
+            distance = result["distance"]
+        except: 
+            distance = None
+            
+        try: 
+            building_address = result["buildingAddress"]
+        except:
+            building_address = None
+        
+        try: 
+            occupancy = result["occupancy"]
+        except:
+            occupancy = None
+        
         return OffStreetParking().clean_parking(
-            id = result["id"],
-            name = result["name"],
-            hrs = result["hrs"],
-            cords = result["point"]["coordinates"],
-            distance = result["distance"],
-            building_address= result["buildingAddress"],
-            occupancy = result["occupancy"]          
+            id = id,
+            name = name,
+            hrs = hrs,
+            cords = cords,
+            distance = distance,
+            building_address= building_address,
+            occupancy = occupancy,          
         )

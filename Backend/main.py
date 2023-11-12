@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from services.ticket_master_service import TicketMasterServices
 from services.inrix_service import InrixServices
-from services.combiner_service import CombinerService
+from combiner_service import CombinerService
 
 
 app = Flask(__name__)
