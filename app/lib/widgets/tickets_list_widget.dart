@@ -28,21 +28,29 @@ class _TicketsListState extends State<TicketsList> {
         Event event = widget.events[index];
 
         return Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.all(12.0),
             child: TicketCard(
               event: event,
               action: widget.findPage == true
-                  ? TextButton(
-                      onPressed: () async => await DB.instance.saveEvent(event),
-                      child: const Text('Save ticket'))
-                  : TextButton(
+                  ? IconButton(
+                      onPressed: () async {
+                        await DB.instance.saveEvent(event);
+                      },
+                      icon: Icon(
+                        Icons.bookmark_outline,
+                        color: Colors.white,
+                      ))
+                  : IconButton(
                       onPressed: () async {
                         await DB.instance.deleteEvent(event.name);
                         setState(() {
                           widget.events.removeAt(index);
                         });
                       },
-                      child: const Text('Delete ticket')),
+                      icon: const Icon(
+                        Icons.delete_outline,
+                        color: Colors.white,
+                      )),
             ));
       },
     );
