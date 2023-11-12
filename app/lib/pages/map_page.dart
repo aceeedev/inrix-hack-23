@@ -6,6 +6,7 @@ import 'package:app/backend/flask_interface.dart';
 import 'package:app/models/event.dart';
 import 'package:app/models/parking_option.dart';
 import 'package:app/models/nav_route.dart';
+import 'dart:ui';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.event, required this.parkingRadius});
@@ -39,6 +40,9 @@ class _MapPageState extends State<MapPage> {
   // late LatLng startPos = const LatLng(37.7775, -122.416389);
   late int parkingOptionIndex = 0;
 
+  late BitmapDescriptor startIcon = BitmapDescriptor.defaultMarker;
+  late BitmapDescriptor endIcon = BitmapDescriptor.defaultMarker;
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -57,17 +61,61 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
 
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/home_pin.png')
+        .then((onValue) {
+      startIcon = onValue;
+    });
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/flag_circle.png')
+        .then((onValue) {
+      endIcon = onValue;
+    });
     asyncFunction();
   }
 
   Future asyncFunction() async {
-    List<ParkingOption> preRoutes =
-        await getRoutes(widget.event.latitude, widget.event.longitude, widget.parkingRadius);
+    List<ParkingOption> preRoutes = await getRoutes(
+        widget.event.latitude, widget.event.longitude, widget.parkingRadius);
 
     setState(() {
       parkingOptions = preRoutes;
       parkingOptionIndex = 0;
     });
+  }
+
+  Future<Map<String, dynamic>> getFutures() async {
+    // List<Event> foodEvents =
+    //     await findEvents(lat, long, 'homeless soup kitchen');
+    // List<Event> shelterEvents = await findEvents(lat, long, 'homeless shelter');
+    BitmapDescriptor genericMarker = await iconDataToBitmap(Icons.person);
+
+    // await DB.instance.saveAllEvents([...foodEvents, ...shelterEvents]);
+
+    return {'genericMarker': genericMarker};
+  }
+
+  Future<BitmapDescriptor> iconDataToBitmap(IconData iconData) async {
+    final pictureRecorder = PictureRecorder();
+    final canvas = Canvas(pictureRecorder);
+
+    final textPainter = TextPainter(textDirection: TextDirection.ltr);
+    final iconStr = String.fromCharCode(iconData.codePoint);
+
+    textPainter.text = TextSpan(
+        text: iconStr,
+        style: TextStyle(
+          letterSpacing: 0.0,
+          fontSize: 96.0,
+          fontFamily: iconData.fontFamily,
+          color: Colors.red,
+        ));
+    textPainter.layout();
+    textPainter.paint(canvas, const Offset(0.0, 0.0));
+
+    final picture = pictureRecorder.endRecording();
+    final image = await picture.toImage(96, 96);
+    final bytes = await image.toByteData(format: ImageByteFormat.png);
+
+    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
   }
 
   @override
@@ -104,9 +152,11 @@ class _MapPageState extends State<MapPage> {
     // get the starting coordinate
     LatLng startPos =
         parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs[0];
-    BitmapDescriptor startIcon = BitmapDescriptor.fromAssetImage(ImageConfiguration(), assetName)
-    Marker startMarker =
-        Marker(markerId: const MarkerId('startMarker'), position: startPos);
+    // BitmapDescriptor startIcon = BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/icons/home_pin.svg').then((onValue) {myIcon = onValue});
+    Marker startMarker = Marker(
+        markerId: const MarkerId('startMarker'),
+        position: startPos,
+        icon: startIcon);
 
     // calculate the last coordinate index
     var lastNavRouteI = parkingOptions[parkingOptionIndex].navRoutes.length - 1;
