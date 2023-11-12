@@ -9,14 +9,16 @@ class Styles {
   static const LinearGradient _linearGradient =
       LinearGradient(colors: [_mainColor, Color(0xFF3A2E87)]);
   static const Color _borderColor = Color(0xFFEEEEEE);
+  static const Color _brownColor = Color(0xFF251A14);
 
   Color get mainColor => _mainColor;
   LinearGradient get linearGradient => _linearGradient;
   Color get borderColor => _borderColor;
+  Color get brownColor => _brownColor;
 
   // Text Styles:
   static const TextStyle _defaultTextStyle =
-      TextStyle(color: Colors.black, fontFamily: _fontFamily);
+      TextStyle(color: _brownColor, fontFamily: _fontFamily);
   static const TextStyle _mediumTextStyle = TextStyle(
       color: Colors.black,
       fontFamily: _fontFamily,

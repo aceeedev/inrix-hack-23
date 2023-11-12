@@ -187,6 +187,7 @@ class _MapPageState extends State<MapPage> {
 
     return Scaffold(
       body: SlidingUpPanel(
+        minHeight: 120.0,
         panel: Column(
           children: [
             const Divider(

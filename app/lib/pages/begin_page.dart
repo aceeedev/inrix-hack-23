@@ -24,7 +24,7 @@ class BeginPage extends StatelessWidget {
             child: Text(
               'Seamless parking, stress-free transit, and immersion in the concert experience.',
               textAlign: TextAlign.center,
-              style: Styles().defaultTextStyle,
+              style: Styles().defaultTextStyle.copyWith(color: Colors.black),
             ),
           ),
           const Spacer(),
