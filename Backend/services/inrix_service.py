@@ -1,5 +1,4 @@
 import requests
-from pprint import pprint
 import json
 from services.credentials_service import CredentialsService
 from services.off_street_parking import OffStreetParking
@@ -41,11 +40,12 @@ class InrixServices:
         return valid_spot
 
     def _filter_parking(self, results, start_time = None, end_time = None) -> list[any]:
-        return [self._extract_parking_data(result).parking for result in results if self._good_parking(result, start_time, end_time)]
+        return [self._extract_parking_data(result) for result in results if self._good_parking(result, start_time, end_time)]
     
     def _extract_parking_data(self, result) -> OffStreetParking:
         return OffStreetParking().clean_parking(
             id = result["id"],
+            name = result["name"],
             hrs = result["hrs"],
             cords = result["point"]["coordinates"],
             distance = result["distance"],
