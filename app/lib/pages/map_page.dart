@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:app/pages/begin_page.dart';
+import 'package:app/backend/flask_interface.dart';
+import 'package:app/models/route.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
@@ -23,25 +25,6 @@ class _MapPageState extends State<MapPage> {
     mapController = controller;
   }
 
-  Polyline driveline = const Polyline(
-    polylineId: PolylineId("driveline"),
-    color: Colors.blue,
-    points: <LatLng>[
-      LatLng(37.7792079, -122.3900709),
-      LatLng(37.77806169999999, -122.3915693),
-      LatLng(37.78166050000001, -122.3961541),
-      LatLng(37.7993974, -122.4087114),
-      LatLng(37.79948880000001, -122.4087865),
-      LatLng(37.7997396, -122.4066119),
-      LatLng(37.80161289999999, -122.4069633),
-      LatLng(37.80185669999999, -122.4056576),
-      LatLng(37.8020986, -122.4059576),
-      LatLng(37.8021366, -122.4058373),
-      LatLng(37.8022515, -122.405858),
-      LatLng(37.8022916, -122.4056988)
-    ], // replace with temp points
-    endCap: Cap.roundCap,
-  );
   // Polyline transitline =
   //     const Polyline(polylineId: PolylineId("awqeF|h_jVv@dATXCDMN"));
   // Polyline returnline = const Polyline(polylineId: PolylineId("returnline"));
@@ -55,54 +38,92 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SlidingUpPanel(
-      panel: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Route',
-              style: Styles().largeTextStyle,
-            ),
-          ),
-          ..._getRouteDirections(),
-        ],
-      ),
-      borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
-      body: Stack(
-        children: [
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            // cloudMapId: '40bae229feee19e5', // javascript vector
-            // cloudMapId: '5b05b9f927bfcf34',  // javascript raster
-            cloudMapId: '701a336f83a1aaa6', // static raster
-            // cloudMapId: '74194f22342551fa',  // android
-            polylines: <Polyline>{driveline},
-            markers: parkSpots,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 11.0,
-            ),
-            myLocationButtonEnabled: false,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 32, left: 16),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: const ButtonStyle(splashFactory: NoSplash.splashFactory),
-                child: const Icon(Icons.arrow_back_ios_new),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ));
-  }
+      body: FutureBuilder(
+        future: getRoutes(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(
+                  child: Text('An error has occurred, ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              List<NavRoute> routes = snapshot.data!;
 
-  List<Widget> _getRouteDirections() {
-    return [];
+              List<MaterialColor> lineColors = [
+                Colors.blue,
+                Colors.orange,
+                Colors.red
+              ];
+
+              Set<Polyline> polyset = {};
+              var index = 0;
+              print(routes[20]);
+              while (routes[index] != null) {
+                polyset.add(Polyline(
+                    polylineId: PolylineId(routes[index].name),
+                    points: routes[index].latLongPairs,
+                    color: lineColors[index]));
+              }
+              for (int loop = 0; loop <= 0; loop++) {}
+
+              // example
+              // Polyline driveline = const Polyline(
+              //   polylineId: PolylineId("driveline"),
+              //   color: Colors.blue,
+              //   points: [LatLng(37.7775, -122.416389)], // replace with temp points
+              //   endCap: Cap.roundCap,
+              // );
+
+              return SlidingUpPanel(
+                panel: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Route',
+                        style: Styles().largeTextStyle,
+                      ),
+                    ),
+                  ],
+                ),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(18.0),
+                    topRight: Radius.circular(18.0)),
+                body: Stack(
+                  children: [
+                    GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      cloudMapId: '40bae229feee19e5', // javascript vector
+                      // cloudMapId: '5b05b9f927bfcf34',  // javascript raster
+                      // cloudMapId: '701a336f83a1aaa6', // static raster
+                      // cloudMapId: '74194f22342551fa',  // android
+                      polylines: polyset,
+                      markers: parkSpots,
+                      initialCameraPosition: CameraPosition(
+                        target: _center,
+                        zoom: 11.0,
+                      ),
+                      myLocationButtonEnabled: false,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 32, left: 16),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          style: const ButtonStyle(
+                              splashFactory: NoSplash.splashFactory),
+                          child: const Icon(Icons.arrow_back_ios_new),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
+    );
   }
 }
