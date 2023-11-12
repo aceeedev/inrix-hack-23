@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:app/models/event.dart';
+import 'package:app/models/route.dart';
 
 String apiUrl = 'http://172.31.151.109:5000';
 
@@ -330,13 +331,20 @@ Future<List<LatLng>> getRoutes() async {
     (37.80244, -122.40571)
   ].map((e) => LatLng(e.$1, e.$2)).toList();
 
-  return dummyData;
+  // return dummyData;
 
   String endpoint = '/';
   var response = await http.Client().get(Uri.parse('$apiUrl$endpoint'));
 
   if (response.statusCode == 200) {
     List<dynamic> json = jsonDecode(response.body);
+
+    List<Route> routes = json
+        .map((e) => Route(
+            name: e['name'],
+            latLongPairs:
+                (e['points'] as List<dynamic>).map((e) => e.latLng).toList<LatLng>()))
+        .toList();
   } else {
     throw Exception('Error, code ${response.statusCode}');
   }
