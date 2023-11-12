@@ -12,18 +12,15 @@ class BeginPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //Image(image: )
-          Text(
-            'App Name',
-          ),
-          Text('App description'),
+          const Text('Drive, Park, and Ride'),
+          const Text(''),
           GradientButton(
               onPressed: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const FindPage(),
                     ),
                   ),
-              child: Text('Begin'))
+              child: const Text('Get Started'))
         ],
       ),
     ));
