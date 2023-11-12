@@ -1,32 +1,15 @@
 import requests
-from pprint import pprint
 import json
-from credentials_service import CredentialsService
-from datetime import datetime as dt
-from models.off_street_parking import OffStreetParking
+from services.credentials_service import CredentialsService
+from services.off_street_parking import OffStreetParking
 
 class InrixServices:
     def __init__(self) -> None:
         self._credential_services = CredentialsService()
         
-    def run_get_parking(self, lat, long, radius, start_time = None, end_time = None): 
-        # url = 'https://api.iq.inrix.com/lots/v3'
-
-        # headers = {'Authorization': "Bearer" + self._credential_services.get_token(),
-        #            'accept': "application/json"
-        # }
-
-        # payload = {'point': str(lat) + "|" + str(long),
-        #            'radius': str(radius),
-        #            'locale': 'en-US',
-        #            'limit': str(200),
-        #            }
-
-        # response = requests.get(url=url, headers=headers, params=payload)
-        # response = response.json()
+    def run_get_parking(self, lat: float, long: float, radius: float, start_time = None, end_time = None): 
         return self._query_parking(lat, long, radius, start_time, end_time)
     
-        
     def _query_parking(self, lat: str, long: str, radius: float, start_time = None, end_time = None) -> json:
         token = self._credential_services.get_token()
         url = 'https://api.iq.inrix.com/lots/v3'
@@ -57,8 +40,15 @@ class InrixServices:
         return valid_spot
 
     def _filter_parking(self, results, start_time = None, end_time = None) -> list[any]:
-        return [result for result in results if self._good_parking(result, start_time, end_time)]
+        return [self._extract_parking_data(result) for result in results if self._good_parking(result, start_time, end_time)]
     
-    # def _extract_parking_data(self, result) -> off_street_parking:
-    #     return off_street_parking
-        
+    def _extract_parking_data(self, result) -> OffStreetParking:
+        return OffStreetParking().clean_parking(
+            id = result["id"],
+            name = result["name"],
+            hrs = result["hrs"],
+            cords = result["point"]["coordinates"],
+            distance = result["distance"],
+            building_address= result["buildingAddress"],
+            occupancy = result["occupancy"]          
+        )
