@@ -1,4 +1,3 @@
-import 'package:app/pages/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app/styles.dart';
 import 'package:app/pages/find_page.dart';

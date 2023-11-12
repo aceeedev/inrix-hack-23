@@ -23,13 +23,19 @@ class _SavedTicketsPageState extends State<SavedTicketsPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return Center(
-                  child: Text('An error has occurred, ${snapshot.error}'));
+                  child: Text(
+                'An error has occurred, ${snapshot.error}',
+                style: Styles().defaultTextStyle,
+              ));
             } else if (snapshot.hasData) {
               List<Event> savedEvents = snapshot.data!;
 
               if (savedEvents.isEmpty) {
-                return const Center(
-                    child: Text('You haven\'t saved any events yet D:'));
+                return Center(
+                    child: Text(
+                  'You haven\'t saved any events yet D:',
+                  style: Styles().defaultTextStyle,
+                ));
               }
 
               return TicketsList(
