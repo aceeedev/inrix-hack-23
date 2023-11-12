@@ -30,20 +30,20 @@ class _TicketsListState extends State<TicketsList> {
         return Padding(
             padding: const EdgeInsets.only(bottom: 10.0),
             child: TicketCard(
-                event: event,
-                action: widget.findPage == true
-                    ? TextButton(
-                        onPressed: () async =>
-                            await DB.instance.saveEvent(event),
-                        child: const Text('Save ticket'))
-                    : TextButton(
-                        onPressed: () async {
-                          await DB.instance.deleteEvent(event.name);
-                          setState(() {
-                            widget.events.removeAt(index);
-                          });
-                        },
-                        child: const Text('Delete ticket'))));
+              event: event,
+              action: widget.findPage == true
+                  ? TextButton(
+                      onPressed: () async => await DB.instance.saveEvent(event),
+                      child: const Text('Save ticket'))
+                  : TextButton(
+                      onPressed: () async {
+                        await DB.instance.deleteEvent(event.name);
+                        setState(() {
+                          widget.events.removeAt(index);
+                        });
+                      },
+                      child: const Text('Delete ticket')),
+            ));
       },
     );
   }

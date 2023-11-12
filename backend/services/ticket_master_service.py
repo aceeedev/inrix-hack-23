@@ -16,5 +16,6 @@ class TicketMasterServices:
             # long = i[]
             # print(eventname)
             eventList.append({'name': eventname, })
-        pprint(eventList)
+            
+        return eventList
 TicketMasterServices.run_get_tickets()
