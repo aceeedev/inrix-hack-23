@@ -1,3 +1,4 @@
+import 'package:app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -13,7 +14,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   late GoogleMapController mapController;
 
-  final LatLng _center = const LatLng(-33.86, 151.20);
+  final LatLng _center = const LatLng(37.7775, -122.416389);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -29,23 +30,19 @@ class _MapPageState extends State<MapPage> {
       ),
       home: Scaffold(
         appBar: AppBar(
-            title: const Text('Sydney'), backgroundColor: Colors.green[700]),
+          title: const Text("Routing"),
+          backgroundColor: Styles().mainColor,
+          titleTextStyle: const TextStyle(
+              color: Colors.white, fontFamily: 'JetBrains Mono'),
+        ),
         body: GoogleMap(
           onMapCreated: _onMapCreated,
+          // cloudMapId: '40bae229feee19e5',  // javascript vector
+          cloudMapId: '701a336f83a1aaa6',  // static rastor
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,
           ),
-          markers: {
-            const Marker(
-              markerId: MarkerId('Sydney'),
-              position: LatLng(-33.86, 151.20),
-              infoWindow: InfoWindow(
-                title: "Sydney",
-                snippet: "Capital of New South Wales",
-              ),
-            )
-          },
         ),
       ),
     );

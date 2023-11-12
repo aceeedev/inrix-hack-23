@@ -28,9 +28,12 @@ class _SavedTicketsPageState extends State<SavedTicketsPage> {
               return Center(
                   child: Text('An error has occurred, ${snapshot.error}'));
             } else if (snapshot.hasData) {
-              List<Event> savedEvents = snapshot.data! as List<Event>;
+              List<Event> savedEvents = snapshot.data!;
 
-              return TicketsList(events: savedEvents);
+              return TicketsList(
+                events: savedEvents,
+                findPage: false,
+              );
             }
           }
 

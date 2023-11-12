@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from services.class3 import TicketMasterServices
+from services.ticket_master_service import TicketMasterServices
 
 app = Flask(__name__)
 

@@ -1,6 +1,5 @@
 import 'package:app/pages/find_page.dart';
 import 'package:flutter/material.dart';
-import 'package:app/pages/map_page.dart';
 import 'package:app/widgets/gradient_button_widget.dart';
 
 class BeginPage extends StatelessWidget {
@@ -13,18 +12,15 @@ class BeginPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //Image(image: )
-          Text(
-            'App Name',
-          ),
-          Text('App description'),
+          const Text('Drive, Park, and Ride'),
+          const Text(''),
           GradientButton(
               onPressed: () => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const FindPage(),
                     ),
                   ),
-              child: Text('Begin'))
+              child: const Text('Get Started'))
         ],
       ),
     ));

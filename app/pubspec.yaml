@@ -65,6 +65,42 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  fonts:
+    - family: JetBrains Mono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Bold.ttf
+        - asset: assets/fonts/JetBrainsMono-BoldItalic.ttf
+        - asset: assets/fonts/JetBrainsMono-ExtraBold.ttf
+        - asset: assets/fonts/JetBrainsMono-ExtraBoldItalic.ttf
+        - asset: assets/fonts/JetBrainsMono-ExtraLight.ttf
+        - asset: assets/fonts/JetBrainsMono-ExtraLightItalic.ttf
+        - asset: assets/fonts/JetBrainsMono-Italic.ttf
+        - asset: assets/fonts/JetBrainsMono-Light.ttf
+        - asset: assets/fonts/JetBrainsMono-LightItalic.ttf
+        - asset: assets/fonts/JetBrainsMono-Medium.ttf
+        - asset: assets/fonts/JetBrainsMono-MediumItalic.ttf
+        - asset: assets/fonts/JetBrainsMono-Regular.ttf
+        - asset: assets/fonts/JetBrainsMono-SemiBold.ttf
+        - asset: assets/fonts/JetBrainsMono-SemiBoldItalic.ttf
+        - asset: assets/fonts/JetBrainsMono-Thin.ttf
+        - asset: assets/fonts/JetBrainsMono-ThinItalic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-Bold.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-BoldItalic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-ExtraBold.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-ExtraBoldItalic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-ExtraLight.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-ExtraLightItalic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-Italic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-Light.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-LightItalic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-Medium.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-MediumItalic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-Regular.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-SemiBold.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-SemiBoldItalic.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-Thin.ttf
+        - asset: assets/fonts/JetBrainsMonoNL-ThinItalic.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
