@@ -59,12 +59,6 @@ class InrixServices:
     def _filter_parking(self, results, start_time = None, end_time = None) -> list[any]:
         return [result for result in results if self._good_parking(result, start_time, end_time)]
     
-    def _extract_parking_data(self, result) -> off_street_parking:
-        return off_street_parking
-            
-
-driver = InrixServices()
-res = driver.run_get_parking(37.74638779388551, -122.42209196090698, 1500)
-
-pprint(res)
-print(len(res))
+    # def _extract_parking_data(self, result) -> off_street_parking:
+    #     return off_street_parking
+        
