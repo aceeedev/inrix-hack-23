@@ -57,6 +57,8 @@ class _MapPageState extends State<MapPage> {
   //   )
   // };
 
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -73,12 +75,18 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future asyncFunction() async {
+    setState(() {
+      isLoading = true;
+    });
+
     List<ParkingOption> preRoutes = await getRoutes(
         widget.event.latitude, widget.event.longitude, widget.parkingRadius);
 
     setState(() {
       parkingOptions = preRoutes;
       parkingOptionIndex = 0;
+
+      isLoading = false;
     });
   }
 
@@ -183,14 +191,21 @@ class _MapPageState extends State<MapPage> {
       body: SlidingUpPanel(
         panel: Column(
           children: [
+            const Icon(
+              Icons.expand_less,
+              size: 48.0,
+            ),
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: Text(
-                'Route',
+                'Parking Options',
                 style: Styles().largeTextStyle,
               ),
             ),
-            ..._getRouteDescriptions(),
+            if (isLoading)
+              const Center(child: CircularProgressIndicator())
+            else
+              ..._getRouteDescriptions()
           ],
         ),
         borderRadius: const BorderRadius.only(
@@ -245,22 +260,38 @@ class _MapPageState extends State<MapPage> {
       routeDescriptions.add(GestureDetector(
           onTap: () => setState(() => parkingOptionIndex = i),
           child: Card(
-              child: Column(
-            children: [
-              Text(
-                parkingOption.endAddress,
-                style: Styles().largeTextStyle,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Styles().borderColor, width: 2.5),
+                borderRadius: BorderRadius.circular(20.0), //<-- SEE HERE
               ),
-              Text(
-                parkingOption.fareText,
-                style: Styles().defaultTextStyle,
-              ),
-              Text(
-                parkingOption.timeText,
-                style: Styles().defaultTextStyle,
-              )
-            ],
-          ))));
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      parkingOption.endAddress,
+                      style: Styles().mediumTextStyle,
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.attach_money),
+                        Text(
+                          parkingOption.fareText
+                              .substring(1, parkingOption.fareText.length),
+                          style: Styles().defaultTextStyle,
+                        ),
+                        const Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: Icon(Icons.timer_outlined)),
+                        Text(
+                          parkingOption.timeText,
+                          style: Styles().defaultTextStyle,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ))));
     }
 
     return routeDescriptions;

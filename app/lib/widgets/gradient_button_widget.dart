@@ -20,10 +20,12 @@ class GradientButton extends StatelessWidget {
           gradient: Styles().linearGradient,
         ),
         child: TextButton(
-            onPressed: onPressed,
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent),
-            child: child));
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+              fixedSize: const Size(300, 65),
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent),
+          child: child,
+        ));
   }
 }
