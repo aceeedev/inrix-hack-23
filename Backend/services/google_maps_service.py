@@ -40,10 +40,17 @@ class GoogleMapsService:
 
             mode = step["travel_mode"]
 
-            steps.append({"mode": mode, "path": poly})
+            if mode == "TRANSIT":
+                headsign = step["transit_details"]["headsign"]
+                steps.append({"mode": mode, "path": poly, "headsign": headsign})
+            else:
+                steps.append({"mode": mode, "path": poly})
 
         res = {"start": start_info, "end": end_info, "time_text": time_text, "time": time, "fare_text": fare_text, "fare": fare, "steps": steps}
         # pprint(res)
+
+        # with open("sample.json", "w") as outfile:
+        #     json.dump(res, outfile)
         return res
 
-# GoogleMapsService.run_get_transit_route(37.7786, -122.3893, 37.8024, -122.4058)
+# GoogleMapsService.run_get_route(37.7786, -122.3893, 37.8024, -122.4058)
