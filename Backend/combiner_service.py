@@ -44,7 +44,6 @@ class CombinerService:
                 res += " hr"
             else:
                 res += " hrs"
-            
             seconds //= 3600
         
         if minutes >= 1:
