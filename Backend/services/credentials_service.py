@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 from datetime import datetime as dt
 import requests
 
@@ -11,7 +10,7 @@ class CredentialsService:
         self.format = "%Y-%m-%dT%H:%M:%S"
         self._get_new_token()
         
-    def _get_new_token(self) -> str: 
+    def _get_new_token(self) -> None: 
         url = "https://api.iq.inrix.com/auth/v1/appToken"
         query_params = {
             "appId": "2lsj0ylb5d",
@@ -34,8 +33,3 @@ class CredentialsService:
     def _valid_token(self) -> bool:
         now = dt.utcnow()
         return now < self.expiration_date
-
-cs = CredentialsService()
-res = cs.get_token()
-
-print(res)
