@@ -14,6 +14,7 @@ class TicketMasterServices:
             eventname = i['name']
             eventURL = i['url']
             eventDate = i['dates']['start']['localDate']
+            eventTimeUTC = i['dates']['start']['dateTime']
 
             # added coordinates to the dictionary
             lat = i['_embedded']['venues'][0]['location']['latitude']
@@ -36,7 +37,7 @@ class TicketMasterServices:
                 except:
                     imagelist = (j['url'])
         
-            eventList.append({'name': eventname, 'eventDate': eventDate, 'lat': lat, 'long': long, 'location': location,'eventURL': eventURL, 'imagelist': imagelist})
+            eventList.append({'name': eventname, 'eventDate': eventDate, 'lat': lat, 'long': long, 'location': location,'eventURL': eventURL, 'imagelist': imagelist, 'eventTimeUTC': eventTimeUTC})
         pprint(eventList)
         return eventList
 TicketMasterServices.run_get_tickets()
