@@ -22,7 +22,9 @@ class TicketMasterServices:
             location = ""
             location = address + ", " + city + ", " + state
             # imagelist is a list of the images 
-            # imagelist = 
-            eventList.append({'name': eventname, 'lat': lat, 'long': long, 'location': location})
+            imagelist = []
+            for j in i['images']:
+                imagelist.append(j['url'])
+            eventList.append({'name': eventname, 'lat': lat, 'long': long, 'location': location, 'imagelist': imagelist})
         pprint(eventList)
 TicketMasterServices.run_get_tickets()
