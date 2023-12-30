@@ -74,7 +74,10 @@ class _MapPageState extends State<MapPage> {
     });
 
     List<ParkingOption> preRoutes = await getRoutes(
-        widget.event.latitude, widget.event.longitude, widget.parkingRadius);
+        widget.event.latitude,
+        widget.event.longitude,
+        widget.parkingRadius,
+        widget.event.startDateText);
 
     startIcon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(48, 48)),
@@ -143,6 +146,14 @@ class _MapPageState extends State<MapPage> {
         position: startPos,
         icon: startIcon);
 
+    var parkNavRouteI =
+        parkingOptions[parkingOptionIndex].navRoutes[0].latLongPairs.length - 1;
+    LatLng parkPos = parkingOptions[parkingOptionIndex]
+        .navRoutes[0]
+        .latLongPairs[parkNavRouteI];
+    Marker parkMarker =
+        Marker(markerId: const MarkerId('parkMarker'), position: parkPos);
+
     // calculate the last coordinate index
     var lastNavRouteI = parkingOptions[parkingOptionIndex].navRoutes.length - 1;
     var lastLatPongPairsI = parkingOptions[parkingOptionIndex]
@@ -204,7 +215,7 @@ class _MapPageState extends State<MapPage> {
               // cloudMapId: '701a336f83a1aaa6', // static raster
               // cloudMapId: '74194f22342551fa',  // android
               polylines: polyset,
-              markers: {startMarker, endMarker},
+              markers: {startMarker, parkMarker, endMarker},
               initialCameraPosition: CameraPosition(
                 target: _center,
                 zoom: 11.0,
